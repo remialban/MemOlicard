@@ -26,10 +26,10 @@ class CardsList
     private $updateAt;
 
     #[ORM\Column(type: 'integer')]
-    private $boxesNumber;
+    private $boxesNumber = 7;
 
     #[ORM\Column(type: 'integer')]
-    private $currentCycleNumber;
+    private $currentCycleNumber = 1;
 
     #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class)]
     private $cards;

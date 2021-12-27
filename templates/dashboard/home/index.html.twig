@@ -3,18 +3,58 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Welcome {{ app.user.firstName }}</h1>
+        </div>
+        <div class="col-md-6">
+            <h2>Your lists</h2>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="bi bi-plus-square"></i> Add a list
+            </button>
+            <hr />
+            <table class="table">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Number of cards</th>
+                        <th scope="col">Updated at</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cardsList in cardsLists %}
+                        <tr>
+                            <td>{{ cardsList.name }}</td>
+                            <td>{{ cardsList.cards|length }}</td>
+                            <td>{{ cardsList.updateAt|date('Y/m/d H:i') }}</td>
+                            <td><a href="{{ path('dashboard_cards_list_edit', {id: cardsList.id}) }}" class="btn btn-primary">Edit</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'D:/Users/Rémi ALBAN/Documents/memolicard/src/Controller/Dashboard/HomeController.php'|file_link(0) }}">src/Controller/Dashboard/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'D:/Users/Rémi ALBAN/Documents/memolicard/templates/dashboard/home/index.html.twig'|file_link(0) }}">templates/dashboard/home/index.html.twig</a></code></li>
-    </ul>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            {{ form_start(form) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create a list</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ form_widget(form) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
 </div>
 {% endblock %}
