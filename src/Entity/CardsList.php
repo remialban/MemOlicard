@@ -34,6 +34,9 @@ class CardsList
     #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class)]
     private $cards;
 
+    #[ORM\Column(type: 'string', length: 255)]
+    private $name;
+
     public function __construct()
     {
         $this->cards = new ArrayCollection();
@@ -130,6 +133,18 @@ class CardsList
                 $card->setCardsList(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }
