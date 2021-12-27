@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints\Unique;
@@ -72,6 +74,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: "The username must contain only letters and/or numbers. The special characters are not allowed."
     )]
     private $username;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CardsList::class)]
+    private $cardsLists;
+
+    public function __construct()
+    {
+        $this->cardsLists = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -187,6 +197,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|CardsList[]
+     */
+    public function getCardsList(): Collection
+    {
+        return $this->cardsLists;
+    }
+
+    public function addCardsList(CardsList $cardsList): self
+    {
+        if (!$this->cardsLists->contains($cardsList)) {
+            $this->cardsLists[] = $cardsList;
+            $cardsList->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFlashCard(CardsList $cardsList): self
+    {
+        if ($this->cardsLists->removeElement($cardsList)) {
+            // set the owning side to null (unless already changed)
+            if ($cardsList->getUser() === $this) {
+                $cardsList->setUser(null);
+            }
+        }
 
         return $this;
     }
