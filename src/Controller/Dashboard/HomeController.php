@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
@@ -41,10 +42,11 @@ class HomeController extends AbstractController
             ]);
         }
 
-        $cardsLists = $cardsListRepository->createQueryBuilder('p')
-            ->orderBy("p.updateAt", "DESC")
-            ->getQuery()
-            ->execute();
+        $cardsLists = $cardsListRepository->findBy([
+            "user" => $this->getUser()
+        ], [
+            "updateAt" => "DESC"
+        ]);
 
         return $this->render('dashboard/home/index.html.twig', [
             'form' => $form->createView(),
@@ -55,6 +57,11 @@ class HomeController extends AbstractController
     #[Route('/dashboard/cardslist/{id}', name: 'dashboard_cards_list_edit')]
     public function editCardsList(CardsList $cardsList)
     {
+        if ($cardsList->getUser() != $this->getUser())
+        {
+            throw new NotFoundHttpException();
+        }
+
         return $this->render('dashboard/home/cards_list_edit.html.twig', [
             'cardsList' => $cardsList
         ]);
