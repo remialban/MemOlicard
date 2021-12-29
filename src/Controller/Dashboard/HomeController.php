@@ -29,7 +29,7 @@ class HomeController extends AbstractController
         {
             $cardsList = $form->getData();
             $cardsList->setCreatedAt(new \DateTimeImmutable());
-            $cardsList->setUpdateAt(new \DateTimeImmutable());
+            $cardsList->setUpdatedAt(new \DateTimeImmutable());
             $cardsList->setUser($this->getUser());
 
             $entityManager = $doctrine->getManager();
@@ -45,7 +45,7 @@ class HomeController extends AbstractController
         $cardsLists = $cardsListRepository->findBy([
             "user" => $this->getUser()
         ], [
-            "updateAt" => "DESC"
+            "updatedAt" => "DESC"
         ]);
 
         return $this->render('dashboard/home/index.html.twig', [

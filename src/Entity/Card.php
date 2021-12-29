@@ -13,10 +13,10 @@ class Card
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $frontValue;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $backValue;
 
     #[ORM\ManyToOne(targetEntity: CardsList::class, inversedBy: 'cards')]
@@ -24,10 +24,10 @@ class Card
     private $cardsList;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $nextSide;
+    private $side;
 
     #[ORM\Column(type: 'integer')]
-    private $current_box_number;
+    private $currentBoxNumber;
 
     public function getId(): ?int
     {
@@ -51,7 +51,7 @@ class Card
         return $this->backValue;
     }
 
-    public function setBackValue(string $backValue): self
+    public function setBackValue(?string $backValue): self
     {
         $this->backValue = $backValue;
 
@@ -70,26 +70,26 @@ class Card
         return $this;
     }
 
-    public function getNextSide(): ?string
+    public function getSide(): ?string
     {
-        return $this->nextSide;
+        return $this->side;
     }
 
-    public function setNextSide(string $nextSide): self
+    public function setSide(string $side): self
     {
-        $this->nextSide = $nextSide;
+        $this->side = $side;
 
         return $this;
     }
 
     public function getCurrentBoxNumber(): ?int
     {
-        return $this->current_box_number;
+        return $this->currentBoxNumber;
     }
 
-    public function setCurrentBoxNumber(int $current_box_number): self
+    public function setCurrentBoxNumber(int $currentBoxNumber): self
     {
-        $this->current_box_number = $current_box_number;
+        $this->currentBoxNumber = $currentBoxNumber;
 
         return $this;
     }

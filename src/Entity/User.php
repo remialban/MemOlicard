@@ -2,11 +2,10 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Symfony\Component\Validator\Constraints\Unique;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -204,7 +203,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection|CardsList[]
      */
-    public function getCardsList(): Collection
+    public function getCardsLists(): Collection
     {
         return $this->cardsLists;
     }
@@ -219,7 +218,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeFlashCard(CardsList $cardsList): self
+    public function removeCardsList(CardsList $cardsList): self
     {
         if ($this->cardsLists->removeElement($cardsList)) {
             // set the owning side to null (unless already changed)

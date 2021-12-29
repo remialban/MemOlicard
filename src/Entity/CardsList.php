@@ -15,7 +15,7 @@ class CardsList
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cardsList')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cardsLists')]
     #[ORM\JoinColumn(nullable: false)]
     private $user;
 
@@ -23,19 +23,16 @@ class CardsList
     private $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private $updateAt;
+    private $updatedAt;
 
     #[ORM\Column(type: 'integer')]
     private $boxesNumber = 7;
 
-    #[ORM\Column(type: 'integer')]
-    private $currentCycleNumber = 1;
-
-    #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class)]
-    private $cards;
-
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
+
+    #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class, orphanRemoval: true)]
+    private $cards;
 
     public function __construct()
     {
@@ -71,14 +68,14 @@ class CardsList
         return $this;
     }
 
-    public function getUpdateAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
-        return $this->updateAt;
+        return $this->updatedAt;
     }
 
-    public function setUpdateAt(\DateTimeImmutable $updateAt): self
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
     {
-        $this->updateAt = $updateAt;
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -95,14 +92,14 @@ class CardsList
         return $this;
     }
 
-    public function getCurrentCycleNumber(): ?int
+    public function getName(): ?string
     {
-        return $this->currentCycleNumber;
+        return $this->name;
     }
 
-    public function setCurrentCycleNumber(int $currentCycleNumber): self
+    public function setName(string $name): self
     {
-        $this->currentCycleNumber = $currentCycleNumber;
+        $this->name = $name;
 
         return $this;
     }
@@ -133,18 +130,6 @@ class CardsList
                 $card->setCardsList(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
 
         return $this;
     }

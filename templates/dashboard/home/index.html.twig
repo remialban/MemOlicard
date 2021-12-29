@@ -28,7 +28,7 @@
                         <tr>
                             <td>{{ cardsList.name }}</td>
                             <td>{{ cardsList.cards|length }}</td>
-                            <td>{{ cardsList.updateAt|date('Y/m/d H:i') }}</td>
+                            <td>{{ cardsList.updatedAt|date('Y/m/d H:i') }}</td>
                             <td><a href="{{ path('dashboard_cards_list_edit', {id: cardsList.id}) }}" class="btn btn-primary">Edit</a></td>
                         </tr>
                     {% endfor %}
