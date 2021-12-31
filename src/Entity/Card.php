@@ -2,32 +2,81 @@
 
 namespace App\Entity;
 
-use App\Repository\CardRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CardRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    attributes: [
+        'pagination_enabled' => false,
+    ],
+    normalizationContext: ['groups' => ['read:Card']],
+    denormalizationContext: ['groups' => ['write:Card']],
+    collectionOperations: [
+        'post' => [
+            'denormalizationContext' => ['groups' => ['write:Card']],
+        ],
+        'get' => [
+            'method' => 'GET',
+            'normalizationContext' => ['groups' => ['read:Card']],
+        ]
+    ],
+    itemOperations: [
+        'patch' => [
+            'denormalizationContext' => ['groups' => ['write:Card']],
+        ],
+        'delete',
+        'get',
+    ]
+)]
+#[ApiFilter(SearchFilter::class, properties: ['cardsList' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['createdAt' => 'ASC'])]
 class Card
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read:Card'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['read:Card', 'write:Card'])]
     private $frontValue;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['read:Card', 'write:Card'])]
     private $backValue;
 
     #[ORM\ManyToOne(targetEntity: CardsList::class, inversedBy: 'cards')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['read:Card', 'write:Card'])]
     private $cardsList;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $side;
+    #[Groups(['read:Card'])]
+    private $side = 'front';
 
     #[ORM\Column(type: 'integer')]
-    private $currentBoxNumber;
+    #[Groups(['read:Card'])]
+    private $currentBoxNumber = 1;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['read:Card'])]
+    private $createdAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['read:Card'])]
+    private $updatedAt;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['read:Card'])]
+    private $movedAt;
 
     public function getId(): ?int
     {
@@ -92,5 +141,64 @@ class Card
         $this->currentBoxNumber = $currentBoxNumber;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getMovedAt(): ?\DateTimeImmutable
+    {
+        return $this->movedAt;
+    }
+
+    public function setMovedAt(\DateTimeImmutable $movedAt): self
+    {
+        $this->movedAt = $movedAt;
+
+        return $this;
+    }
+    
+    /**
+     * Gets triggered only on insert
+
+     * @ORM\PrePersist
+     */
+    public function onPrePersist()
+    {
+        $dateTimeImmutable = new \DateTimeImmutable();
+        $this->createdAt = $dateTimeImmutable;
+        $this->updatedAt = $dateTimeImmutable;
+        $this->movedAt = $dateTimeImmutable;
+    }
+
+    /**
+     * Gets triggered every time on update
+
+     * @ORM\PreUpdate
+     */
+    public function onPreUpdate()
+    {
+        $this->updatedAt = new \DateTimeImmutable("now");
     }
 }
