@@ -2,12 +2,11 @@
 
 {% block title %}Sign in{% endblock %}
 
-{% block body %}
-<div class="container">
-    <h1>Sign in</h1>
-    <hr/>
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
-</div>
+{% block container %}
+<h1>Sign in</h1>
+<hr/>
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
+<a href="{{ path('login') }}">You have already an account?</a>
 {% endblock %}
