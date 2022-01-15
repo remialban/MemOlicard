@@ -66,21 +66,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
-        message: "The first name is required"
+        message: "The first name is required",
+        groups: ['profile'],
     )]
     #[Groups(['read:CardsList', 'read:User'])]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
-        message: "The last name is required"
+        message: "The last name is required",
+        groups: ['profile'],
     )]
     #[Groups(['read:CardsList', 'read:User'])]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
-        message: "The username is required"
+        message: "The username is required",
     )]
     #[Assert\Regex(
         pattern: '/^[a-z]+$/i',
@@ -92,6 +94,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CardsList::class)]
     private $cardsLists;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $biography;
 
     public function __construct()
     {
@@ -242,6 +247,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $cardsList->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): self
+    {
+        $this->biography = $biography;
 
         return $this;
     }
