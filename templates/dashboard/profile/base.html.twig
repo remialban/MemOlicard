@@ -1,1 +1,18 @@
 {% extends 'dashboard/base.html.twig' %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="list-group">
+                {{ "Profile"|navItemUser(path('dashboard_profile'), 'bi-person-circle') }}
+                {{ "Security"|navItemUser(path('dashboard_home'), 'bi-lock-fill') }}
+
+            </div>
+        </div>
+        <div class="col-md">
+            {% block settings_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

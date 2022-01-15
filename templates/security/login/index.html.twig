@@ -11,6 +11,13 @@
         {{ error.messageKey|trans(error.messageData, 'security') }}
     </div>
 {% endif %}
+
+{% if type == "success" %}
+    <div class="alert alert-success" role="alert">
+        Your account has been created. Please login you to access to your dashboard.
+    </div>
+{% endif %}
+
 <form action="{{ path('login') }}" method="post">
     <div class="mb-3">
         <label for="username" class="form-label">Email address</label>
