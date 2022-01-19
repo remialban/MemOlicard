@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType
             ->add('lastName')
             ->add('email', EmailType::class)
             ->add('username', TextType::class)
-            ->add('password', PasswordType::class)
+            ->add('modifiedPassword', PasswordType::class)
             ->add('confirmPassword', PasswordType::class)
             ->add('submit', SubmitType::class)
         ;

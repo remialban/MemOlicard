@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -49,20 +50,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(
-        message: "The password cannot be empty"
+        message: "The password cannot be empty",
+        groups: ['security_password'],
     )]
     #[Assert\Length(
         min: 8,
         max: 30,
-        minMessage: "The password size must be between 8 and 30 characters"
+        minMessage: "The password size must be between 8 and 30 characters",
     )]
     private $password;
 
+    #[Assert\NotBlank(
+        message: "The password cannot be empty",
+        groups: ['security_password'],
+    )]
+    #[Assert\Length(
+        min: 8,
+        max: 30,
+        minMessage: "The password size must be between 8 and 30 characters",
+        groups: ['security_password'],
+    )]
+    public $modifiedPassword;
+
     #[Assert\EqualTo(
-        propertyPath: "password",
-        message: "Both passwords must the same"
+        propertyPath: "modifiedPassword",
+        message: "Both passwords must the same",
+        groups: ['security_password'],
     )]
     private $confirmPassword;
+
+    #[SecurityAssert\UserPassword(
+        message: "Your current password is incorrect",
+        groups: ['security_password'],        
+    )]
+    protected $oldPassword;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
@@ -172,6 +193,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setConfirmPassword(string $confirmPassword): self
     {
         $this->confirmPassword = $confirmPassword;
+
+        return $this;
+    }
+
+    public function getOldPassword(): string
+    {
+        return $this->oldPassword;
+    }
+
+    public function setOldPassword(string $oldPassword): self
+    {
+        $this->oldPassword = $oldPassword;
 
         return $this;
     }
