@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -20,21 +19,11 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
     fields: ['email', 'username'],
     message: '{{ label }} is already used',
 )]
-#[ApiResource(
-    normalizationContext: [
-        'groups' => ['read:User']
-    ],
-    collectionOperations: [],
-    itemOperations: [
-        'get'
-    ]
-)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:CardsList', 'read:User'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
@@ -42,7 +31,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: "The email is required"
     )]
     #[Assert\Email]
-    #[Groups(['read:CardsList', 'read:User'])]
     private $email;
 
     #[ORM\Column(type: 'json')]
@@ -90,7 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: "The first name is required",
         groups: ['profile'],
     )]
-    #[Groups(['read:CardsList', 'read:User'])]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -98,7 +85,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         message: "The last name is required",
         groups: ['profile'],
     )]
-    #[Groups(['read:CardsList', 'read:User'])]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -110,7 +96,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         htmlPattern: "^[a-zA-Z]+$",
         message: "The username must contain only letters and/or numbers. The special characters are not allowed."
     )]
-    #[Groups(['read:CardsList'])]
     private $username;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: CardsList::class)]

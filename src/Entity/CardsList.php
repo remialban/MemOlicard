@@ -7,43 +7,29 @@ use App\Repository\CardsListRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CardsListRepository::class)]
-#[ApiResource(
-    normalizationContext: ['groups' => ['read:CardsList']],
-    collectionOperations: [],
-    itemOperations: [
-        'get' => ['groups' => ['read:CardsList']]
-    ]
-)]
 class CardsList
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:CardsList'])]
     private $id;
 
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cardsLists')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:CardsList'])]
     private $user;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    #[Groups(['read:CardsList'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    #[Groups(['read:CardsList'])]
     private $updatedAt;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:CardsList'])]
     private $boxesNumber = 7;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:CardsList'])]
     private $name;
 
     #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class, orphanRemoval: true)]

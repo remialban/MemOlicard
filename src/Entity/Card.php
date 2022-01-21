@@ -4,78 +4,39 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CardRepository;
-use ApiPlatform\Core\Annotation\ApiFilter;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Serializer\Annotation\Groups;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
-use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource(
-    attributes: [
-        'pagination_enabled' => false,
-    ],
-    normalizationContext: ['groups' => ['read:Card']],
-    denormalizationContext: ['groups' => ['write:Card']],
-    collectionOperations: [
-        'post' => [
-            'denormalizationContext' => ['groups' => ['write:Card']],
-        ],
-        'get' => [
-            'method' => 'GET',
-            'normalizationContext' => ['groups' => ['read:Card']],
-        ]
-    ],
-    itemOperations: [
-        'patch' => [
-            'denormalizationContext' => ['groups' => ['write:Card']],
-        ],
-        'delete',
-        'get',
-    ]
-)]
-#[ApiFilter(SearchFilter::class, properties: ['cardsList' => 'exact'])]
-#[ApiFilter(OrderFilter::class, properties: ['createdAt' => 'ASC'])]
 class Card
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:Card'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:Card', 'write:Card'])]
     private $frontValue;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['read:Card', 'write:Card'])]
     private $backValue;
 
     #[ORM\ManyToOne(targetEntity: CardsList::class, inversedBy: 'cards')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:Card', 'write:Card'])]
     private $cardsList;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:Card'])]
     private $side = 'front';
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:Card'])]
     private $currentBoxNumber = 1;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    #[Groups(['read:Card'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    #[Groups(['read:Card'])]
     private $updatedAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    #[Groups(['read:Card'])]
     private $movedAt;
 
     public function getId(): ?int
