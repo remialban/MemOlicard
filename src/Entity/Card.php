@@ -2,41 +2,68 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CardRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    attributes: [
+        'pagination_enabled' => false,
+        'security_post_denormalize' => "is_granted('API', object)",
+    ],
+    denormalizationContext: ['groups' => ['post:Card']],
+    normalizationContext: ['groups' => ['read:Card']],
+    collectionOperations: [
+        'post',
+    ],
+    itemOperations: [
+        'get',
+        'delete',
+        'patch',
+    ],
+)]
 class Card
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read:Card', 'read:CardsList'])]
     private $id;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['post:Card', 'read:Card', 'read:CardsList'])]
     private $frontValue;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['post:Card', 'read:Card', 'read:CardsList'])]
     private $backValue;
 
     #[ORM\ManyToOne(targetEntity: CardsList::class, inversedBy: 'cards')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['post:Card', 'read:Card'])]
     private $cardsList;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Groups(['read:Card', 'read:CardsList'])]
     private $side = 'front';
 
     #[ORM\Column(type: 'integer')]
+    #[Groups(['read:Card', 'read:CardsList'])]
     private $currentBoxNumber = 1;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['read:Card', 'read:CardsList'])]
     private $createdAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['read:Card', 'read:CardsList'])]
     private $updatedAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    #[Groups(['read:Card', 'read:CardsList'])]
     private $movedAt;
 
     public function getId(): ?int
