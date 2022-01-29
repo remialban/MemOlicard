@@ -9,7 +9,7 @@ use Twig\TwigFilter;
 
 class SettingUserNavigationExtension extends AbstractExtension
 {
-    private Request $request;
+    private $request;
 
     public function __construct(RequestStack $requestStack)
     {
