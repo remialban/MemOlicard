@@ -13,10 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProfileController extends AbstractController
+class SettingsController extends AbstractController
 {
-    #[Route('/dashboard/settings/profile', name: 'dashboard_profile')]
-    public function index(Request $request, ManagerRegistry $managerRegistry, User $user = null): Response
+    #[Route('/dashboard/settings', name: 'dashboard_profile')]
+    public function profile(Request $request, ManagerRegistry $managerRegistry, User $user = null): Response
     {
         if (!$user)
         {
@@ -36,13 +36,13 @@ class ProfileController extends AbstractController
             $this->addFlash("success", "Your profile has been successfully modified!");
         }
 
-        return $this->render('dashboard/profile/index.html.twig', [
+        return $this->render('dashboard/settings/profile.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     #[Route('/dashboard/settings/security', name: 'dashboard_security')]
-    public function dashboard_security(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
+    public function security(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
@@ -62,7 +62,7 @@ class ProfileController extends AbstractController
             $this->addFlash('success', "The password has been successfully modified");
         }
 
-        return $this->render('dashboard/profile/security.html.twig', [
+        return $this->render('dashboard/settings/security.html.twig', [
             'form' => $form->createView(),
         ]);
     }

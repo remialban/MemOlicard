@@ -14,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/dashboard/home', name: 'dashboard_home')]
-    public function index(CardsList $cardsList = null, Request $request, ManagerRegistry $doctrine, CardsListRepository $cardsListRepository): Response
+    #[Route('/dashboard', name: 'dashboard_home')]
+    public function dashboard(CardsList $cardsList = null, Request $request, ManagerRegistry $doctrine, CardsListRepository $cardsListRepository): Response
     {
         if (!$cardsList)
         {
@@ -50,7 +50,7 @@ class HomeController extends AbstractController
             "updatedAt" => "DESC"
         ]);
 
-        return $this->render('dashboard/home/index.html.twig', [
+        return $this->render('dashboard/index.html.twig', [
             'form' => $form->createView(),
             'cardsLists' => $cardsLists
         ]);
