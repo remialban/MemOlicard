@@ -16,6 +16,7 @@ class RegistrationController extends AbstractController
     #[Route('/signin', name: 'register')]
     public function index(User $user = null, Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHandler): Response
     {
+        $this->denyAccessUnlessGranted('anonymous');
         if ($user)
         {
             $user = new User();
