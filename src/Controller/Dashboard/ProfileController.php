@@ -18,8 +18,6 @@ class ProfileController extends AbstractController
     #[Route('/dashboard/settings/profile', name: 'dashboard_profile')]
     public function index(Request $request, ManagerRegistry $managerRegistry, User $user = null): Response
     {
-        $success = false;
-
         if (!$user)
         {
             $user = $this->getUser();
@@ -34,12 +32,12 @@ class ProfileController extends AbstractController
             $doctrine = $managerRegistry->getManager();
             $doctrine->persist($user);
             $doctrine->flush();
-            $success = "Your profile has been successfully modified";
+
+            $this->addFlash("success", "Your profile has been successfully modified!");
         }
 
         return $this->render('dashboard/profile/index.html.twig', [
             'form' => $form->createView(),
-            'success' => $success,
         ]);
     }
 
