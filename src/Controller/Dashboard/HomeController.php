@@ -48,7 +48,7 @@ class HomeController extends AbstractController
             "user" => $this->getUser()
         ], [
             "updatedAt" => "DESC"
-        ]);
+        ], 4);
 
         return $this->render('dashboard/index.html.twig', [
             'form' => $form->createView(),

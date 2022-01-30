@@ -4,37 +4,27 @@
 
 {% block content %}
 <div class="container">
+    <h1>Dashboard</h1>
+    <hr/>
+    <h2>Your lists</h2>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="bi bi-plus-square"></i> Add a list
+    </button>
+    <hr />
     <div class="row">
-        <div class="col-md-6">
-            <h1>Welcome {{ app.user.firstName }}</h1>
-        </div>
-        <div class="col-md-6">
-            <h2>Your lists</h2>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="bi bi-plus-square"></i> Add a list
-            </button>
-            <hr />
-            <table class="table">
-                <thead class="table-primary">
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Number of cards</th>
-                        <th scope="col">Updated at</th>
-                        <th scope="col">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for cardsList in cardsLists %}
-                        <tr>
-                            <td>{{ cardsList.name }}</td>
-                            <td>{{ cardsList.cards|length }}</td>
-                            <td>{{ cardsList.updatedAt|date('Y/m/d H:i') }}</td>
-                            <td><a href="{{ path('dashboard_cards_list_edit', {id: cardsList.id}) }}" class="btn btn-primary" data-turbolinks="false">Edit</a></td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        {% for cardsList in cardsLists %}
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ cardsList.name }}</h5>
+                        <p class="card-text">
+                            <span class="text-black-50 text-muted">Last update : {{ cardsList.updatedAt|date('Y/m/d H:i') }}</span>
+                        </p>
+                        <a href="{{ path('dashboard_cards_list_edit', {id: cardsList.id}) }}" class="stretched-link">Edit</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 </div>
 
