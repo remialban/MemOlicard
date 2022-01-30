@@ -9,11 +9,14 @@ use Twig\TwigFilter;
 
 class SettingUserNavigationExtension extends AbstractExtension
 {
-    private $request;
+    private Request $request;
 
     public function __construct(RequestStack $requestStack)
     {
-        $this->request = $requestStack->getCurrentRequest();
+        if ($requestStack->getCurrentRequest())
+        {
+            $this->request = $requestStack->getCurrentRequest();
+        }
     }
 
     public function getFilters()
