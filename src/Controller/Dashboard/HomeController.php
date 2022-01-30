@@ -37,6 +37,8 @@ class HomeController extends AbstractController
             $entityManager->persist($cardsList);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Your list has been successfully created!');
+
             return $this->redirectToRoute("dashboard_cards_list_edit", [
                 "id" => $cardsList->getId()
             ]);

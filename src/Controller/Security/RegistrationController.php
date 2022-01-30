@@ -37,9 +37,8 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            return $this->redirectToRoute("login", [
-                "type" => "success"
-            ]);
+            $this->addFlash('success', 'Your registration has been validated you are now registered on our site. Please login.');
+            return $this->redirectToRoute("login");
         }
 
         return $this->render('security/registration/index.html.twig', [

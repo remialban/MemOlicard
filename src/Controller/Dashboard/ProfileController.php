@@ -46,7 +46,6 @@ class ProfileController extends AbstractController
     #[Route('/dashboard/settings/security', name: 'dashboard_security')]
     public function dashboard_security(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
     {
-        $success = false;
         $user = $this->getUser();
         $form = $this->createForm(ChangePasswordType::class, $user);
         $form->handleRequest($request);
@@ -62,12 +61,11 @@ class ProfileController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $success = "The password has been successfully modified";
+            $this->addFlash('success', "The password has been successfully modified");
         }
 
         return $this->render('dashboard/profile/security.html.twig', [
             'form' => $form->createView(),
-            'success' => $success,
         ]);
     }
 

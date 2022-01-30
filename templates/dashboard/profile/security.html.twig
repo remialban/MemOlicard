@@ -5,11 +5,6 @@
 {% block settings_content %}
 <h1>Security</h1>
 <hr/>
-{% if success %}
-<div class="alert alert-success" role="alert">
-    {{ success }}
-</div>
-{% endif %}
 {{ form_start(form) }}
 {{ form_widget(form) }}
 <button type="submit" class="btn btn-primary">
