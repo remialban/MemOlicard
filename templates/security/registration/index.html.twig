@@ -5,6 +5,10 @@
 {% block container %}
 <h1>Sign in</h1>
 <hr/>
+<a href="{{ google_url }}" class="btn btn-lg btn-danger w-100">
+    <i class="bi bi-google"></i> Signin with Google
+</a>
+<hr/>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 {{ form_end(form) }}

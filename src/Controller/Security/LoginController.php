@@ -2,6 +2,7 @@
 
 namespace App\Controller\Security;
 
+use App\Security\OAuth\Google;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class LoginController extends AbstractController
             'last_username' => $lastUsername,
             'error'         => $error,
             'type' => $request->query->get('type', false),
+            'google_url' => Google::getLoginPageUrl()
         ]);
     }
 }

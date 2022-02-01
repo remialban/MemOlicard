@@ -21,6 +21,8 @@ security:
             lazy: true
             provider: app_user_provider
             access_denied_handler: App\Security\AccessDeniedHandler
+            custom_authenticators:
+                - App\Security\Authenticator\GoogleAuthenticator
             form_login:
                 login_path: login
                 check_path: login

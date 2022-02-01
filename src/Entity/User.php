@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(
         message: "The password cannot be empty",
         groups: ['security_password'],
@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         max: 30,
         minMessage: "The password size must be between 8 and 30 characters",
     )]
-    private $password;
+    private $password = "";
 
     #[Assert\NotBlank(
         message: "The password cannot be empty",
@@ -104,6 +104,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $biography;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $googleId;
+
     public function __construct()
     {
         $this->cardsLists = new ArrayCollection();
@@ -158,7 +161,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see PasswordAuthenticatedUserInterface
      */
-    public function getPassword(): string
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -277,6 +280,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setBiography(?string $biography): self
     {
         $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): self
+    {
+        $this->googleId = $googleId;
 
         return $this;
     }

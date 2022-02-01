@@ -11,7 +11,10 @@
         {{ error.messageKey|trans(error.messageData, 'security') }}
     </div>
 {% endif %}
-
+<a href="{{ google_url }}" class="btn btn-lg btn-danger w-100">
+    <i class="bi bi-google"></i> Login with Google
+</a>
+<hr/>
 <form action="{{ path('login') }}" method="post">
     <div class="mb-3">
         <label for="username" class="form-label">Email address</label>

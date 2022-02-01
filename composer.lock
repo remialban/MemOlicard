@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d9322ea4370049e6a8d9e7fb6d75788",
+    "content-hash": "72475fed511c9917966bb604d9af294c",
     "packages": [
         {
             "name": "api-platform/core",
@@ -7753,6 +7753,59 @@
                 }
             ],
             "time": "2021-11-25T13:46:55+00:00"
+        },
+        {
+            "name": "vria/nodiacritic",
+            "version": "0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vria/nodiacritic.git",
+                "reference": "3efeb60fb2586fe3ce8ff0f3c122d380717b8b07"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vria/nodiacritic/zipball/3efeb60fb2586fe3ce8ff0f3c122d380717b8b07",
+                "reference": "3efeb60fb2586fe3ce8ff0f3c122d380717b8b07",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "VRia\\Utils\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Riabchenko Vlad",
+                    "email": "contact@vria.eu",
+                    "homepage": "http://vria.eu"
+                }
+            ],
+            "description": "Tiny helper function that removes all diacritical signs from characters",
+            "homepage": "https://github.com/vria/nodiacritic",
+            "keywords": [
+                "accent",
+                "diacritic",
+                "filter",
+                "string",
+                "text"
+            ],
+            "support": {
+                "email": "contact@vria.eu",
+                "issues": "https://github.com/vria/nodiacritic/issues",
+                "source": "https://github.com/vria/nodiacritic/tree/0.1.2"
+            },
+            "time": "2016-09-17T22:03:11+00:00"
         },
         {
             "name": "webmozart/assert",
