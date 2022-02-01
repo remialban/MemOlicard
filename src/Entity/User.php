@@ -46,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         max: 30,
         minMessage: "The password size must be between 8 and 30 characters",
     )]
-    private $password = "";
+    private $password;
 
     #[Assert\NotBlank(
         message: "The password cannot be empty",
