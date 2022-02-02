@@ -3,6 +3,7 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\User;
+use App\Form\Security\CreatePasswordType;
 use App\Form\Settings\ProfileType;
 use App\Form\Settings\Security\ChangePasswordType;
 use App\Repository\UserRepository;
@@ -45,26 +46,34 @@ class SettingsController extends AbstractController
     public function security(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(ChangePasswordType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
+        if ($user instanceof User)
         {
-            $user = $form->getData();
-
-            $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->modifiedPassword);
-            $user->setPassword($hashedPassword);
-
-            $em = $managerRegistry->getManager();
-            $em->persist($user);
-            $em->flush();
-
-            $this->addFlash('success', "The password has been successfully modified");
+            if ($user->getPassword())
+            {
+                $form = $this->createForm(ChangePasswordType::class, $user);
+            } else {
+                $form = $this->createForm(CreatePasswordType::class, $user);
+            }
+            $form->handleRequest($request);
+            
+            if ($form->isSubmitted() && $form->isValid())
+            {
+                $user = $form->getData();
+    
+                $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->modifiedPassword);
+                $user->setPassword($hashedPassword);
+    
+                $em = $managerRegistry->getManager();
+                $em->persist($user);
+                $em->flush();
+    
+                $this->addFlash('success', "The password has been successfully modified");
+            }
+    
+            return $this->render('dashboard/settings/security.html.twig', [
+                'form' => $form->createView(),
+            ]);   
         }
-
-        return $this->render('dashboard/settings/security.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     #[Route('/dashboard/logout', name: 'logout')]

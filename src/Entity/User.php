@@ -56,14 +56,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         min: 8,
         max: 30,
         minMessage: "The password size must be between 8 and 30 characters",
-        groups: ['security_password'],
+        groups: ['security_password', 'security_create_password'],
     )]
     public $modifiedPassword;
 
     #[Assert\EqualTo(
         propertyPath: "modifiedPassword",
         message: "Both passwords must the same",
-        groups: ['security_password'],
+        groups: ['security_password', 'security_create_password'],
     )]
     private $confirmPassword;
 
