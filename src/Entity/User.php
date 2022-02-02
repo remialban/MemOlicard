@@ -28,13 +28,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank(
-        message: "The email is required"
+        message: "The email is required",
+        groups: ['security_register'],
     )]
-    #[Assert\Email]
+    #[Assert\Email(
+        groups: ['security_register'],
+    )]
     private $email;
 
     #[ORM\Column(type: 'json')]
-    private $roles = [];
+    private $roles = ['ROLE_USER'];
 
     #[ORM\Column(type: 'string', nullable: true)]
     #[Assert\NotBlank(
@@ -50,20 +53,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[Assert\NotBlank(
         message: "The password cannot be empty",
-        groups: ['security_password'],
+        groups: ['security_password', 'security_register'],
     )]
     #[Assert\Length(
         min: 8,
         max: 30,
         minMessage: "The password size must be between 8 and 30 characters",
-        groups: ['security_password', 'security_create_password'],
+        groups: ['security_password', 'security_create_password', 'security_register'],
     )]
-    public $modifiedPassword;
+    private $modifiedPassword;
 
     #[Assert\EqualTo(
         propertyPath: "modifiedPassword",
         message: "Both passwords must the same",
-        groups: ['security_password', 'security_create_password'],
+        groups: ['security_password', 'security_create_password', 'security_register'],
     )]
     private $confirmPassword;
 
@@ -76,25 +79,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
         message: "The first name is required",
-        groups: ['profile'],
+        groups: ['profile', 'security_register'],
     )]
     private $firstName;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
         message: "The last name is required",
-        groups: ['profile'],
+        groups: ['profile', 'security_register'],
     )]
     private $lastName;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Assert\NotBlank(
         message: "The username is required",
+        groups: ['security_register'],
     )]
     #[Assert\Regex(
         pattern: '/^[a-z]+$/i',
         htmlPattern: "^[a-zA-Z]+$",
-        message: "The username must contain only letters and/or numbers. The special characters are not allowed."
+        message: "The username must contain only letters and/or numbers. The special characters are not allowed.",
+        groups: ['security_register'],
     )]
     private $username;
 
@@ -292,6 +297,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setGoogleId(?string $googleId): self
     {
         $this->googleId = $googleId;
+
+        return $this;
+    }
+
+    public function getModifiedPassword(): ?string
+    {
+        return $this->modifiedPassword;
+    }
+
+    public function setModifiedPassword(?string $modifiedPassword): self
+    {
+        $this->modifiedPassword = $modifiedPassword;
 
         return $this;
     }

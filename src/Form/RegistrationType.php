@@ -20,9 +20,10 @@ class RegistrationType extends AbstractType
             ->add('lastName')
             ->add('email', EmailType::class)
             ->add('username', TextType::class)
-            ->add('password', PasswordType::class)
+            ->add('modifiedPassword', PasswordType::class, [
+                'label' => 'Password'
+            ])
             ->add('confirmPassword', PasswordType::class)
-            ->add('submit', SubmitType::class)
         ;
     }
 
@@ -30,6 +31,7 @@ class RegistrationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'validation_groups' => ['security_register']
         ]);
     }
 }

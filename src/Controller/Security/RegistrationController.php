@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
 
             $entityManager = $doctrine->getManager();
 
-            $hashedPassword = $passwordHandler->hashPassword($user, $user->getPassword());
+            $hashedPassword = $passwordHandler->hashPassword($user, $user->getModifiedPassword());
             $user->setPassword($hashedPassword);
 
             $entityManager->persist($user);

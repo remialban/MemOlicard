@@ -11,6 +11,9 @@
 <hr/>
 {{ form_start(form) }}
 {{ form_widget(form) }}
+<button type="submit" class="btn btn-primary">
+    <i class="bi bi-check2-circle"></i> Sign in
+</button>
 {{ form_end(form) }}
 <a href="{{ path('login') }}">You have already an account?</a>
 {% endblock %}
