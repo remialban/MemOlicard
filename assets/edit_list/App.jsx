@@ -2,13 +2,17 @@ import React, { useEffect, useReducer, useState } from "react";
 import Input from "./Input";
 import Cards from "./Cards";
 
-export default function App({id})
+export default function App({id, token})
 {
     var [isSaving, setSaving] = useState(false);
 
     var useApi = async () => {
         var url = "/api/cards_lists/" + id;
-        var response = await fetch(url);
+        var response = await fetch(url, {
+            headers: {
+                "Authorization": "Bearer " + token,
+            }
+        });
         if (response.ok)
         {
             setCardsList({
@@ -25,7 +29,8 @@ export default function App({id})
             var response = await fetch(url, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/merge-patch+json"
+                    "Content-Type": "application/merge-patch+json",
+                    "Authorization": "Bearer " + token,
                 },
                 body: JSON.stringify(cardsList),
             });
@@ -47,7 +52,8 @@ export default function App({id})
             var response = await fetch(url, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/merge-patch+json"
+                    "Content-Type": "application/merge-patch+json",
+                    "Authorization": "Bearer " + token,
                 },
                 body: JSON.stringify(card),
             });
@@ -98,7 +104,8 @@ export default function App({id})
             var response = await fetch(url, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/ld+json"
+                    "Content-Type": "application/ld+json",
+                    "Authorization": "Bearer " + token,
                 },
                 body: JSON.stringify({
                     cardsList: cardsList['@id'],
@@ -123,6 +130,9 @@ export default function App({id})
         try {
             var response = await fetch(url, {
                 method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                },
             });
             if (response.ok)
             {

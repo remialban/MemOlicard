@@ -6,11 +6,12 @@ use App\Entity\CardsList;
 use App\Form\CardsListType;
 use App\Repository\CardsListRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class HomeController extends AbstractController
 {
@@ -57,7 +58,7 @@ class HomeController extends AbstractController
     }
 
     #[Route('/dashboard/cardslist/{id}', name: 'dashboard_cards_list_edit')]
-    public function editCardsList(CardsList $cardsList)
+    public function editCardsList(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
         if ($cardsList->getUser() != $this->getUser())
         {
@@ -65,7 +66,8 @@ class HomeController extends AbstractController
         }
 
         return $this->render('dashboard/home/cards_list_edit.html.twig', [
-            'cardsList' => $cardsList
+            'cardsList' => $cardsList,
+            'token' => $JWTManager->create($this->getUser()),
         ]);
     }
 }
