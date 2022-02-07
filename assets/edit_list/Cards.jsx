@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./Card";
 
-export default function Cards({cardsList, setCardsList, updateCard, removeCard})
+export default function Cards({cardsList, setCardsList, removeCard, token})
 {
     var cards = cardsList['cards'] || [];
     return (
@@ -12,8 +12,8 @@ export default function Cards({cardsList, setCardsList, updateCard, removeCard})
                                 key={card['@id']}
                                 card={card}
                                 index={index} 
+                                token={token}
                                 setCardsList={setCardsList}
-                                updateCard={updateCard}
                                 removeCard={removeCard} />
                 })
             

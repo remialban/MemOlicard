@@ -1,7 +1,8 @@
 import React from "react";
+import { updateCard } from "../api/cards";
 import Input from "./Input";
 
-export default function Card({card, index, setCardsList, updateCard, removeCard})
+export default function Card({card, index, setCardsList, removeCard, token})
 {
     var onChangeBackValue = (e) => {
         setCardsList({
@@ -31,7 +32,7 @@ export default function Card({card, index, setCardsList, updateCard, removeCard}
                             defaultValue={card['frontValue']}
                             arrayKey={'frontValue'}
                             onChange={onChangeFrontValue}
-                            onBlur={() => updateCard(card)}
+                            onBlur={() => updateCard(card['id'], card, token)}
                              />
                     </div>
                     <div className="col-md-6">
@@ -41,7 +42,7 @@ export default function Card({card, index, setCardsList, updateCard, removeCard}
                             defaultValue={card['backValue']}
                             arrayKey={'backValue'} 
                             onChange={onChangeBackValue}
-                            onBlur={() => updateCard(card)}
+                            onBlur={() => updateCard(card['id'], card, token)}
                             />
                     </div>
                     <div className="col-12">

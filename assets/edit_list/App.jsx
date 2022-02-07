@@ -1,71 +1,23 @@
 import React, { useEffect, useReducer, useState } from "react";
 import Input from "./Input";
 import Cards from "./Cards";
+import { getList, updateList } from "../api/lists";
 
 export default function App({id, token})
 {
     var [isSaving, setSaving] = useState(false);
 
     var useApi = async () => {
-        var url = "/api/cards_lists/" + id;
-        var response = await fetch(url, {
-            headers: {
-                "Authorization": "Bearer " + token,
-            }
+        setCardsList({
+            type: "set",
+            value: await getList(id, token),
         });
-        if (response.ok)
-        {
-            setCardsList({
-                type: "set",
-                value: await response.json()
-            })
-        }
     }
 
     var updateData = async () => {
         setSaving(true);
-        var url = "/api/cards_lists/" + id;
-        try {
-            var response = await fetch(url, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/merge-patch+json",
-                    "Authorization": "Bearer " + token,
-                },
-                body: JSON.stringify(cardsList),
-            });
-            if (response.ok)
-            {
-                setSaving(false);
-            } else {
-                alert("An error occured, your list has not been saved. Please try later.");
-            }
-        } catch (error) {
-            alert("An error occured, your list has not been saved. Please try later.");
-        }
-    }
-
-    var updateCard = async (card) => {
-        setSaving(true);
-        var url = "/api/cards/" + card['id'];
-        try {
-            var response = await fetch(url, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/merge-patch+json",
-                    "Authorization": "Bearer " + token,
-                },
-                body: JSON.stringify(card),
-            });
-            if (response.ok)
-            {
-                setSaving(false);
-            } else {
-                alert("An error occured, your list has not been saved. Please try later.");
-            }
-        } catch (error) {
-            alert("An error occured, your list has not been saved. Please try later.");
-        }
+        await updateList(id, token, cardsList);
+        setSaving(false);
     }
 
     var [cardsList, setCardsList] = useReducer(function (state, action) {
@@ -161,7 +113,7 @@ export default function App({id, token})
             }            
             <Input label="Name" defaultValue={cardsList['name']} arrayKey="name" onChange={onChangeValue} onBlur={updateData} />
             <h2>Cards:</h2>
-            <Cards removeCard={removeCard} cardsList={cardsList} setCardsList={setCardsList} updateCard={updateCard} />
+            <Cards removeCard={removeCard} cardsList={cardsList} setCardsList={setCardsList} token={token} />
             <button className="btn btn-outline-primary btn-lg w-100 mt-3 mb-3" onClick={addCard}><i className="bi bi-plus-square"></i> Add card</button>
 
         </div>
