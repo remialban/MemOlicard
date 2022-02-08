@@ -1,3 +1,4 @@
+import React from "react";
 import useApi from "./api";
 
 var DOMAIN = "cards_lists";
@@ -7,11 +8,10 @@ var DOMAIN = "cards_lists";
  * @param {int} id 
  * @returns {Object}
  */
-export async function getList(id, token)
+export async function getList(id)
 {
     return await useApi(
         DOMAIN,
-        token,
         "GET",
         null,
         id
@@ -21,15 +21,13 @@ export async function getList(id, token)
 /**
  * 
  * @param {int} id 
- * @param {string} token 
  * @param {Object} content 
  * @returns {Object}
  */
-export async function updateList(id, token, content)
+export async function updateList(id, content)
 {
     return await useApi(
         DOMAIN,
-        token,
         "PATCH",
         content,
         id

@@ -1,59 +1,36 @@
 import React from "react";
 import { updateCard } from "../api/cards";
-import Input from "./Input";
 
-export default function Card({card, index, setCardsList, removeCard, token})
+export default function Card({card, removeCard})
 {
-    var onChangeBackValue = (e) => {
-        setCardsList({
-            type: "edit_card",
-            value: e.target.value,
-            index: index,
-            name: "backValue"
-        });
-    }
-    var onChangeFrontValue = (e) => {
-        setCardsList({
-            type: "edit_card",
-            value: e.target.value,
-            index: index,
-            name: "frontValue"
-        });
+    var handleChange = (e) => {
+        card[e.target.name] = e.target.value;
+        updateCard(card['id'], card);
     }
 
     return (
-        <div className="card mt-3">
-            <div className="card-body">
-                <div className="row">
-                    <div className="col-md-6">
-                        <Input
-                            type="textarea"
-                            label="Front value"
-                            defaultValue={card['frontValue']}
-                            arrayKey={'frontValue'}
-                            onChange={onChangeFrontValue}
-                            onBlur={() => updateCard(card['id'], card, token)}
-                             />
-                    </div>
-                    <div className="col-md-6">
-                        <Input
-                            type="textarea"
-                            label="Back value"
-                            defaultValue={card['backValue']}
-                            arrayKey={'backValue'} 
-                            onChange={onChangeBackValue}
-                            onBlur={() => updateCard(card['id'], card, token)}
-                            />
-                    </div>
-                    <div className="col-12">
-                        <button
-                            className="btn btn-sm btn-danger"
-                            onClick={() => removeCard(card['id'])}>
-                                <i className="bi bi-trash"></i> Delete card
-                        </button>
+        <form onBlur={handleChange} onSubmit={(e) => {e.preventDefault()}}>
+            <div className="card mt-3">
+                <div className="card-body">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <label>Front value:</label>
+                            <textarea className="form-control" defaultValue={card['frontValue']} name="frontValue" />
+                        </div>
+                        <div className="col-md-6">
+                            <label>Back value:</label>
+                            <textarea className="form-control" defaultValue={card['backValue']} name="backValue" />
+                        </div>
+                        <div className="col-12">
+                            <button
+                                className="btn btn-sm btn-danger"
+                                onClick={() => removeCard(card['id'])}>
+                                    <i className="bi bi-trash"></i> Delete card
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     )
 }

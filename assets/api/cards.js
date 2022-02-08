@@ -1,3 +1,4 @@
+import React from "react";
 import useApi from "./api";
 
 var DOMAIN = "cards";
@@ -6,14 +7,12 @@ var DOMAIN = "cards";
  * Update a card
  * @param {int} id 
  * @param {Object} content 
- * @param {string} token 
  * @returns {Object}
  */
-export async function updateCard(id, content, token)
+export async function updateCard(id, content)
 {
     return useApi(
         DOMAIN,
-        token,
         "PATCH",
         content,
         id
@@ -29,18 +28,21 @@ export async function deleteCard(id)
 {
     return useApi(
         DOMAIN,
-        token,
         "DELETE",
         null,
         id
     )
 }
 
-export async function createCard(id, content, token)
+/**
+ * Create a card
+ * @param {Object} content 
+ * @returns 
+ */
+export async function createCard(content)
 {
     return useApi(
         DOMAIN,
-        token,
         "POST",
         content,
         null
