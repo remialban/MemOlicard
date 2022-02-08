@@ -3,7 +3,7 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\User;
-use App\Form\Security\CreatePasswordType;
+use App\Form\Settings\Security\CreatePasswordType;
 use App\Form\Settings\ProfileType;
 use App\Form\Settings\Security\ChangePasswordType;
 use App\Repository\UserRepository;
