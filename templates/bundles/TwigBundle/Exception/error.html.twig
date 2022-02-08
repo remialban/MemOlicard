@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Internal error{% endblock %}
+
+{% block container %}
+<h1>Internal error</h1>
+<hr/>
+<p>An error has occurred. Please try again. If this error persists, please contact us.</p>
+<a href="{{ path('home') }}" class="btn btn-primary"><i class="bi bi-house-door-fill"></i> Return to home page</a>
+{% endblock %}
