@@ -27,7 +27,11 @@ DATABASE_URL="mysql://user:password@127.0.0.1:3306/memolicard?serverVersion=5.7"
 DATABASE_URL="sqlite:///%kernel.project_dir%/var/data.db"
 DATABASE_URL="postgresql://user:password@127.0.0.1:5432/app?serverVersion=13&charset=utf8"
 ```
-
+To use the Google authentification, you need to create authorization credentials in Google Cloud Platform (https://developers.google.com/identity/protocols/oauth2/web-server#creatingcred) and replace your credentials in the `.env` file:
+```
+OAUTH_ID_GOOGLE=<GOOGLE_ID>
+OAUTH_SECRET_KEY_GOOGLE=<GOOGLE_KEY>
+```
 ## Update database
 Creation of the database:
 ```
