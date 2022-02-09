@@ -1,0 +1,50 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}{{ cardsList.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>{{ cardsList.name }}</h1>
+    <hr/>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3 text-center">
+                <div class="card-body">
+                    <p class="card-text">
+                        <a href="#" class="btn btn-primary stretched-link"><i class="bi bi-book"></i> Learn list</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3 text-center">
+                <div class="card-body">
+                    <p class="card-text">
+                        <a href="{{ path('list_edit', {id: cardsList.id}) }}" class="btn btn-primary stretched-link"><i class="bi bi-pencil-square"></i> Edit list</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">Front</th>
+                <th scope="col">Back</th>
+            </tr>
+        </thead>
+        <h2>Cards:</h2>
+        <tbody>
+            {% for card in cardsList.cards %}
+                <tr>
+                    <td>{{ card.frontValue }}</td>
+                    <td>{{ card.backValue }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

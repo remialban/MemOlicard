@@ -10,7 +10,20 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class ListsController extends AbstractController
 {
-    #[Route('/dashboard/lists/{id}/edit', name: 'dashboard_cards_list_edit')]
+    #[Route('/dashboard/lists/{id}', name: 'list_view')]
+    public function view(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
+    {
+        if ($cardsList->getUser() != $this->getUser())
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('dashboard/lists/view.html.twig', [
+            'cardsList' => $cardsList,
+        ]);
+    }
+
+    #[Route('/dashboard/lists/{id}/edit', name: 'list_edit')]
     public function editCardsList(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
         if ($cardsList->getUser() != $this->getUser())
