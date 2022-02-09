@@ -46,7 +46,7 @@ class CardsList
 
     #[ORM\Column(type: 'integer')]
     #[Groups(['read:CardsList'])]
-    private $boxesNumber = 7;
+    private $boxesNumber = 3;
 
     #[ORM\Column(type: 'string', length: 255)]
     #[Groups(['read:CardsList', 'write:CardsList'])]
@@ -55,6 +55,10 @@ class CardsList
     #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class, orphanRemoval: true)]
     #[Groups(['read:CardsList'])]
     private $cards;
+
+    #[ORM\Column(type: 'bigint')]
+    #[Groups(['read:CardsList', 'write:CardsList'])]
+    private $currentCycle = 1;
 
     public function __construct()
     {
@@ -152,6 +156,18 @@ class CardsList
                 $card->setCardsList(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCurrentCycle(): ?string
+    {
+        return $this->currentCycle;
+    }
+
+    public function setCurrentCycle(string $currentCycle): self
+    {
+        $this->currentCycle = $currentCycle;
 
         return $this;
     }

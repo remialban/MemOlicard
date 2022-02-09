@@ -63,8 +63,12 @@ class Card
     private $updatedAt;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
-    #[Groups(['read:Card', 'read:CardsList'])]
+    #[Groups(['post:Card', 'read:Card', 'read:CardsList'])]
     private $movedAt;
+
+    #[ORM\Column(type: 'boolean')]
+    #[Groups(['post:Card', 'read:Card', 'read:CardsList'])]
+    private $isStudiedInCurrentCycle = false;
 
     public function getId(): ?int
     {
@@ -188,5 +192,17 @@ class Card
     public function onPreUpdate()
     {
         $this->updatedAt = new \DateTimeImmutable("now");
+    }
+
+    public function getIsStudiedInCurrentCycle(): ?bool
+    {
+        return $this->isStudiedInCurrentCycle;
+    }
+
+    public function setIsStudiedInCurrentCycle(bool $isStudiedInCurrentCycle): self
+    {
+        $this->isStudiedInCurrentCycle = $isStudiedInCurrentCycle;
+
+        return $this;
     }
 }
