@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
-class ListsController extends AbstractController
+class ListController extends AbstractController
 {
     #[Route('/dashboard/lists/{id}', name: 'list_view')]
     public function view(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
