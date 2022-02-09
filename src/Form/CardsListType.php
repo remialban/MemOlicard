@@ -14,19 +14,6 @@ class CardsListType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('boxesNumber', ChoiceType::class, [
-                'choices' => [
-                    '3' => 3,
-                    '4' => 4,
-                    '5' => 5,
-                    '6' => 6,
-                    '7' => 7,
-                    '8' => 8,
-                    '9' => 9,
-                    '10' => 10
-                ],
-
-            ])
         ;
     }
 

@@ -10,8 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class HomeController extends AbstractController
 {
@@ -54,20 +52,6 @@ class HomeController extends AbstractController
         return $this->render('dashboard/index.html.twig', [
             'form' => $form->createView(),
             'cardsLists' => $cardsLists
-        ]);
-    }
-
-    #[Route('/dashboard/cardslist/{id}', name: 'dashboard_cards_list_edit')]
-    public function editCardsList(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
-    {
-        if ($cardsList->getUser() != $this->getUser())
-        {
-            throw new NotFoundHttpException();
-        }
-
-        return $this->render('dashboard/home/cards_list_edit.html.twig', [
-            'cardsList' => $cardsList,
-            'token' => $JWTManager->create($this->getUser()),
         ]);
     }
 }
