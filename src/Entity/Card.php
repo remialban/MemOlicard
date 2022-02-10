@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CardRepository;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 #[ORM\Entity(repositoryClass: CardRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -18,6 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['read:Card']],
     collectionOperations: [
         'post',
+        'get',
     ],
     itemOperations: [
         'get',
@@ -25,6 +29,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
         'patch',
     ],
 )]
+#[ApiFilter(SearchFilter::class, properties: ['cardsList.id' => 'exact'])]
+#[ApiFilter(OrderFilter::class, properties: ['currentBoxNumber' => 'ASC', 'movedAt' => 'ASC'])]
 class Card
 {
     #[ORM\Id]
