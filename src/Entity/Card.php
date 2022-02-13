@@ -15,18 +15,23 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 #[ApiResource(
     attributes: [
         'pagination_enabled' => false,
-        'security_post_denormalize' => "is_granted('API', object)",
     ],
     denormalizationContext: ['groups' => ['post:Card']],
     normalizationContext: ['groups' => ['read:Card']],
     collectionOperations: [
-        'post',
+        'post' => [
+            'security_post_denormalize' => "is_granted('API', object)",
+        ],
         'get',
     ],
     itemOperations: [
         'get',
-        'delete',
-        'patch',
+        'delete' => [
+            'security_post_denormalize' => "is_granted('API', object)",
+        ],
+        'patch' => [
+            'security_post_denormalize' => "is_granted('API', object)",
+        ],
     ],
 )]
 #[ApiFilter(SearchFilter::class, properties: ['cardsList.id' => 'exact'])]

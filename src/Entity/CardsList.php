@@ -13,14 +13,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ApiResource(
     attributes: [
         'pagination_enabled' => false,
-        'security_post_denormalize' => "is_granted('API', object)",
     ],
     denormalizationContext: ['groups' => ['write:CardsList']],
     normalizationContext: ['groups' => ['read:CardsList']],
     collectionOperations: [],
     itemOperations: [
-        'get',
-        'patch',
+        'get' => [
+            'security_post_denormalize' => "is_granted('API', object)",
+        ],
+        'patch' => [
+            'security_post_denormalize' => "is_granted('API', object)",
+        ],
     ],
 )]
 class CardsList
