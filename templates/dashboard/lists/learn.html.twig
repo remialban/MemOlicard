@@ -1,0 +1,15 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Learn {{ cardsList.name }}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Learn</h1>
+    <hr/>
+    <div id="learn-list" data-id="{{ cardsList.id }}" data-token="{{ token }}"></div>
+</div>
+
+{{ encore_entry_script_tags('learn_list') }}
+
+{% endblock %}

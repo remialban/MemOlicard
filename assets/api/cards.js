@@ -48,3 +48,13 @@ export async function createCard(content)
         null
     )
 }
+
+export async function getCards(id)
+{
+    return useApi(
+        DOMAIN + "/?cardsList.id=" + id,
+        "GET",
+        null,
+        null,
+    )
+}

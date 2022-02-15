@@ -112,6 +112,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $googleId;
 
+    #[ORM\Column(type: 'boolean')]
+    private $emailIsChecked;
+
     public function __construct()
     {
         $this->cardsLists = new ArrayCollection();
@@ -309,6 +312,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setModifiedPassword(?string $modifiedPassword): self
     {
         $this->modifiedPassword = $modifiedPassword;
+
+        return $this;
+    }
+
+    public function getEmailIsChecked(): ?bool
+    {
+        return $this->emailIsChecked;
+    }
+
+    public function setEmailIsChecked(bool $emailIsChecked): self
+    {
+        $this->emailIsChecked = $emailIsChecked;
 
         return $this;
     }

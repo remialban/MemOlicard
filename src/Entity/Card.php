@@ -58,11 +58,11 @@ class Card
     private $cardsList;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:Card', 'read:CardsList'])]
+    #[Groups(['read:Card', 'read:CardsList', 'post:Card'])]
     private $side = 'front';
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['read:Card', 'read:CardsList'])]
+    #[Groups(['read:Card', 'read:CardsList', 'post:Card'])]
     private $currentBoxNumber = 1;
 
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]

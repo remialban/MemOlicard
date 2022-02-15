@@ -24,7 +24,7 @@ class ListController extends AbstractController
     }
 
     #[Route('/dashboard/lists/{id}/edit', name: 'list_edit')]
-    public function editCardsList(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
+    public function edit(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
         if ($cardsList->getUser() != $this->getUser())
         {
@@ -32,6 +32,20 @@ class ListController extends AbstractController
         }
 
         return $this->render('dashboard/lists/edit.html.twig', [
+            'cardsList' => $cardsList,
+            'token' => $JWTManager->create($this->getUser()),
+        ]);
+    }
+
+    #[Route('/dashboard/lists/{id}/learn', name: 'list_learn')]
+    public function learn(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
+    {
+        if ($cardsList->getUser() != $this->getUser())
+        {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->render('dashboard/lists/learn.html.twig', [
             'cardsList' => $cardsList,
             'token' => $JWTManager->create($this->getUser()),
         ]);

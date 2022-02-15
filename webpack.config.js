@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('edit_list', './assets/edit_list.js')
+    .addEntry('learn_list', './assets/learn_list.js')
     .addEntry('turbolinks', './assets/turbolinks.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)

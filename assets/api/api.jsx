@@ -23,7 +23,7 @@ export default async function useApi(domain, method, data = null, id = null)
         }
 
         var headers = {
-            "Authorization": "Bearer " + document.getElementById("list").getAttribute("data-token"),
+            "Authorization": "Bearer " + (document.getElementById("list")||document.getElementById("learn-list")).getAttribute("data-token"),
             "Accept": "application/ld+json",
         }
 
