@@ -113,7 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $googleId;
 
     #[ORM\Column(type: 'boolean')]
-    private $emailIsChecked;
+    private $emailIsChecked = false;
 
     public function __construct()
     {
