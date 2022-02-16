@@ -1,0 +1,7 @@
+{% extends 'email/base.html.twig' %}
+
+{% block content %}
+<p>The MemOlicard team welcomes you!</p>
+<p>In order to confirm your registration in <a href="{{ absolute_url(path('home')) }}">MemOlicard</a>, you have just to confirm that you are the owner the the {{ user.email}} email by opening this link in your web browser:</p>
+<p><a href="{{ absolute_url(path('check_email', {'token': token})) }}"></a>{{ absolute_url(path('check_email', {'token': token})) }}</p>
+{% endblock %}

@@ -53,6 +53,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
             } else
             {
                 $user = (new User())
+                    ->setEmailIsChecked(true)
                     ->setFirstName($response->getFirstName())
                     ->setLastName($response->getLastName())
                     ->setEmail($response->getEmail())
