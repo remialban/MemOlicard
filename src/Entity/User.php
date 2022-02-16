@@ -16,8 +16,14 @@ use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(
-    fields: ['email', 'username'],
+    fields: ['email'],
     message: '{{ label }} is already used',
+    groups: ['security_register'],
+)]
+#[UniqueEntity(
+    fields: ['username'],
+    message: '{{ label }} is already used',
+    groups: ['security_register']
 )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
