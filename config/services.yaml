@@ -21,5 +21,9 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    App\Tool\CustomJWT:
+        arguments:
+            $privateKeyPath: '%env(resolve:JWT_PRIVATE_KEY)%'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
