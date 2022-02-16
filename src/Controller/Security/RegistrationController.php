@@ -48,6 +48,7 @@ class RegistrationController extends AbstractController
             $email = (new TemplatedEmail())
                 ->from("remi.alban@hotmail.com")
                 ->to($user->getEmail())
+                ->subject("Welcome to MemOlicard ! Check your email adress")
                 ->htmlTemplate("email/email_verification.html.twig")
                 ->context([
                     'user' => $user,
