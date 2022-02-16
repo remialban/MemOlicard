@@ -4,7 +4,7 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
         App\Entity\User:
-            algorithm: auto
+            algorithm: bcrypt
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
@@ -28,10 +28,7 @@ security:
             access_denied_handler: App\Security\AccessDeniedHandler
             custom_authenticators:
                 - App\Security\Authenticator\GoogleAuthenticator
-            form_login:
-                login_path: login
-                check_path: login
-                enable_csrf: true
+                - App\Security\Authenticator\FormAuthenticator
             logout:
                 path: logout
             # activate different ways to authenticate

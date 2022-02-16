@@ -6,31 +6,16 @@
 <h1>Log in</h1>
 <hr/>
 
-{% if error %}
-    <div class="alert alert-danger" role="alert">
-        {{ error.messageKey|trans(error.messageData, 'security') }}
-    </div>
-{% endif %}
 <a href="{{ google_url }}" class="btn btn-lg btn-danger w-100">
     <i class="bi bi-google"></i> Login with Google
 </a>
 <hr/>
-<form action="{{ path('login') }}" method="post">
-    <div class="mb-3">
-        <label for="username" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="username" name="_username" value="{{ last_username }}">
-        <div class="form-text">We'll never share your email with anyone else.</div>
-    </div>
-    <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="_password">
-    </div>
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-    <input type="hidden" name="_target_path" value="{{ path('dashboard_home') }}"/>
-    <button type="submit" class="btn btn-primary">Log in</button>
-    <br/>
-    <a href="{{ path('register') }}">You doesn't have an account?</a>
-    <br />
-    <a href="{{ path('login_forgot_password') }}">Forgot password</a>
-</form>
+{{ form_start(form) }}
+{{ form_widget(form) }}
+<button type="submit" class="btn btn-primary">Log in</button>
+<br/>
+<a href="{{ path('register') }}">You doesn't have an account?</a>
+<br />
+<a href="{{ path('login_forgot_password') }}">Forgot password</a>
+{{ form_end(form) }}
 {% endblock %}

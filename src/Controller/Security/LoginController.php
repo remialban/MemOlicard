@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Tool\CustomJWT;
 use App\Security\OAuth\Google;
 use App\Form\ForgotPasswordType;
+use App\Form\LoginType;
 use App\Repository\UserRepository;
 use Firebase\JWT\SignatureInvalidException;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -26,14 +27,11 @@ class LoginController extends AbstractController
     public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+
+        $form = $this->createForm(LoginType::class);
 
         return $this->render('security/login/index.html.twig', [
-            'controller_name' => 'LoginController',
-            'last_username' => $lastUsername,
-            'error'         => $error,
-            'type' => $request->query->get('type', false),
+            'form' => $form->createView(),
             'google_url' => Google::getLoginPageUrl()
         ]);
     }
