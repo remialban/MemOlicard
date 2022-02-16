@@ -63,7 +63,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
                 } while ($this->userRepository->findOneBy([
                     'username' => $this->getStartUsername($response->getFirstName(), $response->getLastName()) . $i
                 ]));
-                $user->setUsername($this->getStartUsername($response->getFirstName(), $response->getLastName()));
+                $user->setUsername($this->getStartUsername($response->getFirstName(), $response->getLastName()) . $i);
                 $this->managerRegistry->getManager()->persist($user);
                 $this->managerRegistry->getManager()->flush();
                 $session = $request->getSession();
