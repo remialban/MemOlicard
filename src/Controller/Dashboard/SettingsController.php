@@ -60,7 +60,7 @@ class SettingsController extends AbstractController
             {
                 $user = $form->getData();
     
-                $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->modifiedPassword);
+                $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getModifiedPassword());
                 $user->setPassword($hashedPassword);
     
                 $em = $managerRegistry->getManager();
