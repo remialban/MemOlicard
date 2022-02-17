@@ -4,6 +4,7 @@ namespace App\Form\Settings;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +15,11 @@ class ProfileType extends AbstractType
         $builder
             ->add('firstName')
             ->add('lastName')
-            ->add('biography')
+            ->add('biography', TextareaType::class, [
+                "attr" => [
+                    "rows" => 10,
+                ],
+            ])
         ;
     }
 
