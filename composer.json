@@ -15,6 +15,7 @@
         "doctrine/orm": "^2.10",
         "firebase/php-jwt": "^6.0",
         "fzaninotto/faker": "^1.5",
+        "league/commonmark": "^2.2",
         "lexik/jwt-authentication-bundle": "^2.14",
         "nelmio/cors-bundle": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -50,6 +51,7 @@
         "symfony/webpack-encore-bundle": "^1.13",
         "symfony/yaml": "6.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
+        "twig/markdown-extra": "^3.3",
         "twig/twig": "^2.12|^3.0",
         "vria/nodiacritic": "^0.1.2"
     },

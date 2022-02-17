@@ -16,6 +16,9 @@
     "composer/package-versions-deprecated": {
         "version": "1.11.99.4"
     },
+    "dflydev/dot-access-data": {
+        "version": "v3.0.1"
+    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -135,6 +138,12 @@
     "lcobucci/jwt": {
         "version": "4.0.4"
     },
+    "league/commonmark": {
+        "version": "2.2.2"
+    },
+    "league/config": {
+        "version": "v1.1.1"
+    },
     "lexik/jwt-authentication-bundle": {
         "version": "2.14",
         "recipe": {
@@ -167,6 +176,12 @@
         "files": [
             "./config/packages/nelmio_cors.yaml"
         ]
+    },
+    "nette/schema": {
+        "version": "v1.2.2"
+    },
+    "nette/utils": {
+        "version": "v3.2.7"
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
@@ -684,6 +699,9 @@
     },
     "twig/extra-bundle": {
         "version": "v3.3.4"
+    },
+    "twig/markdown-extra": {
+        "version": "v3.3.8"
     },
     "twig/twig": {
         "version": "v3.3.4"
