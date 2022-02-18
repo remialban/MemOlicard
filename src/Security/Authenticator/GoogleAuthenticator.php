@@ -7,9 +7,11 @@ use VRia\Utils\NoDiacritic;
 use App\Security\OAuth\Google;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -19,7 +21,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class GoogleAuthenticator extends AbstractAuthenticator
 {
-    public function __construct(private Google $google, private UserRepository $userRepository, private ManagerRegistry $managerRegistry)
+    public function __construct(private Google $google, private UserRepository $userRepository, private ManagerRegistry $managerRegistry, private RouterInterface $routerInterface)
     {
         
     }
@@ -49,6 +51,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
                 if ($session instanceof Session)
                 {
                     $session->getFlashBag()->add('danger', 'You have already an account with the ' . $response->getEmail() . ' email.');
+                    throw new AuthenticationException();
                 }
             } else
             {
@@ -90,7 +93,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        return null;
+        return new RedirectResponse($this->routerInterface->generate("login"));
     }
 
     public function getStartUsername(string $firstName, string $lastName): string
