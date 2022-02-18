@@ -1,60 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { updateCard } from "../api/cards";
 
-export default function Card({card, index, totalItem, nextCard})
+export default function Card({card, number, totalItem, nextCard})
 {
-    var [isTurnedOver, setIsTurnedOver] = useState(false);
+    var [frontValue, setFrontValue] = useState("")
+    var [backValue, setBackValue] = useState("")
+    var [side, setSide] = useState("front");
 
-    useEffect(() => {
-        setIsTurnedOver(false);
-    }, [card, index]);
-
-    var onSubmit = async (isKnow) => {
-        if (isKnow)
+    useState(() => {
+        if (card['side'] == "front")
         {
-            if (card['currentBoxNumber'] < 3)
-            {
-                card['currentBoxNumber'] = card['currentBoxNumber'] + 1;
-            }
+            setFrontValue(card['frontValue']);
+            setBackValue(card['backValue']);
         } else {
-            if (card['currentBoxNumber'] > 1)
-            {
-                card['currentBoxNumber'] = card['currentBoxNumber'] - 1;
-            }
+            setFrontValue(card['backValue']);
+            setBackValue(card['frontValue']);
         }
+    }, [number]);
 
-        if (card['side'] == 'front')
-        {
-            card['side'] = 'back';
-        } else {
-            card['side'] = 'front'
-        }
-
-        var currentDate = new Date();
-        card['movedAt'] = "" + currentDate.getFullYear() + "-" + currentDate.getMonth() + "-" + currentDate.getDate() + "T" + currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds() + "+00:00";
-        updateCard(card['id'], card);
-        nextCard();
+    var onSubmit = async (isKnown) => {
+        nextCard(isKnown);
     }
 
     return <div className="card text-center">
         <div className="card-header">
-        {index + 1}/{totalItem} studied in this cycle
+        {number}/{totalItem} studied in this cycle
         </div>
-        {
-            !isTurnedOver ? <div className="card-body">
-                <h5 className="card-title">{card['side'] == 'front' ? card['frontValue'] : card['backValue']}</h5>
-                <button className="btn btn-success btn-lg m-2" onClick={() => {setIsTurnedOver(true)}}>
-                    Turn over
-                </button>
-            </div> : <div className="card-body">
-                <h5 className="card-title">{card['side'] == 'back' ? card['frontValue'] : card['backValue']}</h5>
-                <button className="btn btn-success btn-lg m-2" onClick={() => {onSubmit(true)}}>
-                    <i className="bi bi-check-square-fill"></i>
-                </button>
-                <button className="btn btn-warning btn-lg m-2" onClick={() => {onSubmit(false)}}>
-                    <i className="bi bi-x-square-fill"></i>
-                </button>
-            </div>
-        }
+        <div className="card-body">
+                <h5 className="card-title">{side == "front" ? frontValue : backValue}</h5>
+                { side == "front" &&
+                    <button className="btn btn-success btn-lg m-2" onClick={() => {setSide("back")}}>
+                        Turn over
+                    </button>
+                }
+                { side == "back" &&
+                    <div>
+                        <button className="btn btn-success btn-lg m-2" onClick={() => {onSubmit(true)}}>
+                            <i className="bi bi-check-square-fill"></i>
+                        </button>
+                        <button className="btn btn-warning btn-lg m-2" onClick={() => {onSubmit(false)}}>
+                            <i className="bi bi-x-square-fill"></i>
+                        </button>
+                    </div>
+                    
+                }
+                
+        </div>
     </div>
 }
