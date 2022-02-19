@@ -25,5 +25,12 @@ services:
         arguments:
             $privateKeyPath: '%env(resolve:JWT_PRIVATE_KEY)%'
 
+    App\Service\TypeSense\TypeSense:
+        arguments:
+            $apiKey: '%env(resolve:TYPESENSE_API_KEY)%'
+            $host: '%env(resolve:TYPESENSE_HOST)%'
+            $port: '%env(resolve:TYPESENSE_PORT)%'
+            $protocol: '%env(resolve:TYPESENSE_PROTOCOL)%'
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

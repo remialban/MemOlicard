@@ -1,0 +1,26 @@
+{% extends 'dashboard/base.html.twig' %}
+
+{% block title %}Search{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Search</h1>
+    <hr />
+    <form action="{{ path('search') }}">
+                <input class="form-control" name="q" type="text" value="{{ query }}" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-success w-100 mt-3" type="submit"><i class="bi bi-search"></i> Search</button>
+    </form>
+    <br />
+    {% for user in users %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.username }}</h5>
+                <p class="card-text">
+                    <span class="text-black-50 text-muted"></span>
+                </p>
+                <a href="{{ path('user_view', {username: user.username}) }}" class="stretched-link">View</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

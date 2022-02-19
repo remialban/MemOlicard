@@ -7,7 +7,9 @@
     <h1>@{{ user.username }}</h1>
     <hr/>
     <p>
-        {{ user.biography|escape|markdown_to_html  }}        
+        {% if user.biography %}
+            {{ user.biography|escape|markdown_to_html  }}
+        {% endif %}
     </p>
 </div>
 {% endblock %}
