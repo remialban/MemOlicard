@@ -83,7 +83,7 @@ class TypeSense {
         $searchParameters = [
             'q'         => $query,
             'per_page' => $perPage,
-            'current_page' => $currentPage,
+            'page' => $currentPage,
         ];
         if ($type == "users")
         {
