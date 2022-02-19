@@ -17,6 +17,7 @@ export default function App({id})
 
     var updateData = async () => {
         setSaving(true);
+        document.title = "Edit " + cardsList["name"] + " list - MemOlicard";
         await updateList(id, cardsList);
         setSaving(false);
     }

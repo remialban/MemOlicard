@@ -1,11 +1,11 @@
 {% extends 'dashboard/base.html.twig' %}
 
-{% block title %}Edition of the list of cards{% endblock %}
+{% block title %}Edit {{ cardsList.name }} list{% endblock %}
 
 {% block content %}
 
 <div class="container">
-    <h1>Flashcard</h1>
+    <h1>Edit {{ cardsList.name }} list</h1>
     <hr/>
     <div id="list" data-id="{{ cardsList.id }}" data-token="{{ token }}"></div>
 </div>
