@@ -19,6 +19,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
@@ -26,7 +27,10 @@ class LoginController extends AbstractController
     /**
      * @Route("/login", name="login")
      */
-    public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
+    public function index(
+        AuthenticationUtils $authenticationUtils,
+        Request $request,
+        UrlGeneratorInterface $router): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
 
@@ -34,7 +38,7 @@ class LoginController extends AbstractController
 
         return $this->render('security/login/index.html.twig', [
             'form' => $form->createView(),
-            'google_url' => Google::getLoginPageUrl()
+            'google_url' => Google::getLoginPageUrl($router)
         ]);
     }
 

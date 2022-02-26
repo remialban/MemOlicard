@@ -17,13 +17,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class RegistrationController extends AbstractController
 {
     /**
      * @Route("/signin", name="register")
      */
-    public function index(User $user = null, Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHandler, MailerInterface $mailerInterface, CustomJWT $customJWT): Response
+    public function index(
+        User $user = null,
+        Request $request,
+        ManagerRegistry $doctrine,
+        UserPasswordHasherInterface $passwordHandler,
+        MailerInterface $mailerInterface,
+        CustomJWT $customJWT,
+        UrlGeneratorInterface $router): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
         if ($user)
@@ -66,7 +74,7 @@ class RegistrationController extends AbstractController
 
         return $this->render('security/registration/index.html.twig', [
             'form' => $form->createView(),
-            'google_url' => Google::getLoginPageUrl(),
+            'google_url' => Google::getLoginPageUrl($router),
         ]);
     }
 
