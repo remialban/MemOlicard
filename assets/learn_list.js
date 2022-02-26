@@ -2,7 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./learn_card/App";
 
-document.addEventListener("turbolinks:load", function() {
+export function run()
+{
     var element = document.getElementById("learn-list");
     if (element != null)
     {
@@ -11,4 +12,4 @@ document.addEventListener("turbolinks:load", function() {
             element
         );
     }
-});
+}

@@ -13,9 +13,11 @@ use Doctrine\ORM\Query\Expr;
 
 class CardExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
 {
-    public function __construct(private Security $security)
+    private Security $security;
+
+    public function __construct(Security $security)
     {
-        
+        $this->security = $security;
     }
 
     public function applyToCollection(

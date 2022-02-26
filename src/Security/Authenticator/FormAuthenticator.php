@@ -27,15 +27,27 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class FormAuthenticator extends AbstractAuthenticator
 {
+    private UserRepository $userRepository;
+    private ManagerRegistry $managerRegistry;
+    private FormFactoryInterface $formFactory;
+    private UserPasswordHasherInterface $userPasswordHasherInterface;
+    private CustomJWT $customJWT;
+    private MailerInterface $mailerInterface;
+
     public function __construct(
-        private UserRepository $userRepository,
-        private ManagerRegistry $managerRegistry,
-        private FormFactoryInterface $formFactory,
-        private UserPasswordHasherInterface $userPasswordHasherInterface,
-        private CustomJWT $customJWT,
-        private MailerInterface $mailerInterface)
+        UserRepository $userRepository,
+        ManagerRegistry $managerRegistry,
+        FormFactoryInterface $formFactory,
+        UserPasswordHasherInterface $userPasswordHasherInterface,
+        CustomJWT $customJWT,
+        MailerInterface $mailerInterface)
     {
-        
+        $this->userRepository = $userRepository;
+        $this->managerRegistry = $managerRegistry;
+        $this->formFactory = $formFactory;
+        $this->userPasswordHasherInterface = $userPasswordHasherInterface;
+        $this->customJWT = $customJWT;
+        $this->mailerInterface = $mailerInterface;
     }
     public function supports(Request $request): bool
     {

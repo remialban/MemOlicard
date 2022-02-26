@@ -1,7 +1,7 @@
 require("./turbolinks");
 
 document.addEventListener("turbolinks:load", function() {
-    require("./edit_list");
-    require("./learn_list");
-    require("./flash_messages");
+    require("./edit_list").run();
+    require("./learn_list").run();
+    require("./flash_messages").run();
 });

@@ -13,112 +13,116 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\Validator\Constraints as SecurityAssert;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-#[UniqueEntity(
-    fields: ['email'],
-    message: '{{ label }} is already used',
-    groups: ['security_register'],
-)]
-#[UniqueEntity(
-    fields: ['username'],
-    message: '{{ label }} is already used',
-    groups: ['security_register']
-)]
+/**
+ * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\Table(name="user")
+ * @UniqueEntity(
+ *  fields={"email"},
+ *  message="{{ label }} is already used",
+ *  groups={"security_register"},
+ *  )
+ * @UniqueEntity(
+ *  fields={"username"},
+ *  message="{{ label }} is already used",
+ *  groups={"security_register"},
+ *  )
+ */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Assert\NotBlank(
-        message: "The email is required",
-        groups: ['security_register'],
-    )]
-    #[Assert\Email(
-        groups: ['security_register'],
-    )]
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="The email is required", groups={"security_register"},)
+     * @Assert\Email(groups={"security_register"},)
+     */
     private $email;
 
-    #[ORM\Column(type: 'json')]
-    private $roles = ['ROLE_USER'];
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles =["ROLE_USER"];
 
-    #[ORM\Column(type: 'string', nullable: true)]
-    #[Assert\NotBlank(
-        message: "The password cannot be empty",
-        groups: ['security_password'],
-    )]
-    #[Assert\Length(
-        min: 8,
-        max: 30,
-        minMessage: "The password size must be between 8 and 30 characters",
-    )]
+    /**
+     * @ORM\Column(type="string", nullable=true)
+     * @Assert\NotBlank(message="The password cannot be empty",groups={"security_password"},)
+     * @Assert\Length(min=8,max=30,minMessage="The password size must be between 8 and 30 characters",)
+     */
     private $password;
 
-    #[Assert\NotBlank(
-        message: "The password cannot be empty",
-        groups: ['security_password', 'security_register'],
-    )]
-    #[Assert\Length(
-        min: 8,
-        max: 30,
-        minMessage: "The password size must be between 8 and 30 characters",
-        groups: ['security_password', 'security_create_password', 'security_register'],
-    )]
+    /**
+     * @Assert\NotBlank(message="The password cannot be empty",groups={"security_password", "security_register"},)
+     * @Assert\Length(min=8,max=30,minMessage="The password size must be between 8 and 30 characters",groups={"security_password", "security_create_password", "security_register"},)
+     */
     private $modifiedPassword;
 
-    #[Assert\EqualTo(
-        propertyPath: "modifiedPassword",
-        message: "Both passwords must the same",
-        groups: ['security_password', 'security_create_password', 'security_register'],
-    )]
+    /**
+     * @Assert\EqualTo(propertyPath="modifiedPassword",message="Both passwords must the same",groups={"security_password", "security_create_password", "security_register"},)
+     */
     private $confirmPassword;
 
-    #[SecurityAssert\UserPassword(
-        message: "Your current password is incorrect",
-        groups: ['security_password'],        
-    )]
+    /**
+     * @SecurityAssert\UserPassword(message= "Your current password is incorrect",groups= {"security_password"},        )
+     *
+     */
     protected $oldPassword;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(
-        message: "The first name is required",
-        groups: ['profile', 'security_register'],
-    )]
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="The first name is required",
+     *      groups={"profile", "security_register"}
+     * )
+     */
     private $firstName;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(
-        message: "The last name is required",
-        groups: ['profile', 'security_register'],
-    )]
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="The last name is required",
+     *      groups={"profile", "security_register"}
+     * )
+     */
     private $lastName;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Assert\NotBlank(
-        message: "The username is required",
-        groups: ['security_register'],
-    )]
-    #[Assert\Regex(
-        pattern: '/^[a-z]+$/i',
-        htmlPattern: "^[a-zA-Z]+$",
-        message: "The username must contain only letters and/or numbers. The special characters are not allowed.",
-        groups: ['security_register'],
-    )]
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(
+     *      message="The username is required",
+     *      groups={"security_register"}
+     * )
+     * @Assert\Regex(
+     *      pattern="/^[a-z]+$/i",
+     *      htmlPattern="^[a-zA-Z]+$",
+     *      message="The username must contain only letters and/or numbers. The special characters are not allowed.",
+     *      groups={"security_register"}
+     * )
+     */
     private $username;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: CardsList::class)]
+    /**
+     * @ORM\OneToMany(mappedBy="user", targetEntity=CardsList::class)
+     */
     private $cardsLists;
 
-    #[ORM\Column(type: 'text', nullable: true)]
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
     private $biography;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
     private $googleId;
 
-    #[ORM\Column(type: 'boolean')]
+    /**
+     * @ORM\Column(type="boolean")
+     */
     private $emailIsChecked = false;
 
     public function __construct()
@@ -160,7 +164,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = "ROLE_USER";
 
         return array_unique($roles);
     }
@@ -332,5 +336,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emailIsChecked = $emailIsChecked;
 
         return $this;
+    }
+
+    public function getSalt()
+    {
+        return null;
     }
 }

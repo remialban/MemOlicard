@@ -13,7 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
 {
-    #[Route('/dashboard', name: 'dashboard_home')]
+    /**
+     * @Route("/dashboard", name="dashboard_home")
+     */
     public function dashboard(CardsList $cardsList = null, Request $request, ManagerRegistry $doctrine, CardsListRepository $cardsListRepository): Response
     {
         if (!$cardsList)

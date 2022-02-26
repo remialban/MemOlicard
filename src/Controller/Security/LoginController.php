@@ -23,7 +23,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'login')]
+    /**
+     * @Route("/login", name="login")
+     */
     public function index(AuthenticationUtils $authenticationUtils, Request $request): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
@@ -36,7 +38,9 @@ class LoginController extends AbstractController
         ]);
     }
 
-    #[Route('/login/forgot-password', name: 'login_forgot_password')]
+    /**
+     * @Route("/login/forgot-password", name="login_forgot_password")
+     */
     public function forgotPassword(
         Request $request,
         UserRepository $userRepository,

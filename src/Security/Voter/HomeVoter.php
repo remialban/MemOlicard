@@ -8,11 +8,13 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 class HomeVoter extends Voter
 {
-    const ANONYMOUS = 'anonymous';
+    public const ANONYMOUS = 'anonymous';
 
-    public function __construct(private Security $security)
+    private Security $security;
+
+    public function __construct(Security $security)
     {
-        
+        $this->security = $security;
     }
 
     protected function supports(string $attribute, $subject): bool

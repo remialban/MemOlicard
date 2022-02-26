@@ -10,7 +10,9 @@ use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 
 class ListController extends AbstractController
 {
-    #[Route('/dashboard/lists/{id}', name: 'list_view')]
+    /**
+     * @Route("/dashboard/list/{id}", name="list_view")
+     */
     public function view(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
         if ($cardsList->getUser() != $this->getUser())
@@ -23,7 +25,9 @@ class ListController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/lists/{id}/edit', name: 'list_edit')]
+    /**
+     * @Route("/dashboard/lists/{id}/edit", name="list_edit")
+     */
     public function edit(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
         if ($cardsList->getUser() != $this->getUser())
@@ -37,7 +41,9 @@ class ListController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/lists/{id}/learn', name: 'list_learn')]
+    /**
+     * @Route("/dashboard/lists/{id}/learn", name="list_learn")
+     */
     public function learn(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
         if ($cardsList->getUser() != $this->getUser())

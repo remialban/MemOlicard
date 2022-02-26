@@ -11,10 +11,13 @@ use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    private UrlGeneratorInterface $urlGenerator;
+
+    public function __construct(UrlGeneratorInterface $urlGenerator)
     {
-        
+        $this->urlGenerator = $urlGenerator;
     }
+
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
         if ($accessDeniedException->getAttributes()[0] == "anonymous")

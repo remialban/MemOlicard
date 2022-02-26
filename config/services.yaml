@@ -19,8 +19,6 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
-            - '../src/Tests/'
-
     App\Tool\CustomJWT:
         arguments:
             $privateKeyPath: '%env(resolve:JWT_PRIVATE_KEY)%'

@@ -8,16 +8,30 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-#[AsCommand(
-    name: 'typesense:schema:update',
-    description: 'Update the typesense schema collections',
-    hidden: false,
-)]
+/**
+ * @AsCommand(
+ * name= "typesense:schema:update",
+ * description= "Update the typesense schema collections",
+ * hidden= false,
+ * )
+*/
 class SchemaCommand extends Command
 {
-    public function __construct(private TypeSense $typeSense)
+    private TypeSense $typeSense;
+
+    public function __construct(TypeSense $typeSense)
     {
         parent::__construct();
+        $this->typeSense = $typeSense;
+    }
+
+    protected function configure()
+    {
+        $this
+            ->setName("typesense:schema:update")
+            ->setDescription("Update the typesense schema collections")
+            ->setHidden(false)
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

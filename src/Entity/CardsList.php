@@ -9,58 +9,80 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity(repositoryClass: CardsListRepository::class)]
-#[ApiResource(
-    attributes: [
-        'pagination_enabled' => false,
-    ],
-    denormalizationContext: ['groups' => ['write:CardsList']],
-    normalizationContext: ['groups' => ['read:CardsList']],
-    collectionOperations: [],
-    itemOperations: [
-        'get' => [
-            'security_post_denormalize' => "is_granted('API', object)",
-        ],
-        'patch' => [
-            'security_post_denormalize' => "is_granted('API', object)",
-        ],
-    ],
-)]
+/**
+ * @ORM\Entity(repositoryClass=CardsListRepository::class)
+ * @ApiResource(
+ *      attributes={
+ *          "pagination_enabled"=false,
+ *      },
+ *      denormalizationContext={
+ *          "groups"={"write:CardsList"},
+ *      },
+ *      normalizationContext={
+ *          "groups"={"read:CardsList"},
+ *      },
+ *      collectionOperations={},
+ *      itemOperations={
+ *          "get"={
+ *              "security_post_denormalize"="is_granted('API', object)",
+ *          },
+ *          "patch"={
+ *              "security_post_denormalize"="is_granted('API', object)",
+ *          },
+ *      },
+ * )
+ */
 class CardsList
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
-    #[Groups(['read:CardsList'])]
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     * @Groups({"read:CardsList"})
+     */
     private $id;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'cardsLists')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:CardsList'])]
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="cardsLists")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"read:CardsList"})
+     */
     private $user;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    #[Groups(['read:CardsList'])]
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     * @Groups({"read:CardsList"})
+     */
     private $createdAt;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    #[Groups(['read:CardsList'])]
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     * @Groups({"read:CardsList"})
+     */
     private $updatedAt;
 
-    #[ORM\Column(type: 'integer')]
-    #[Groups(['read:CardsList'])]
+    /**
+     * @ORM\Column(type="integer")
+     * @Groups({"read:CardsList"})
+     */
     private $boxesNumber = 3;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['read:CardsList', 'write:CardsList'])]
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"read:CardsList", "write:CardsList"})
+     */
     private $name;
 
-    #[ORM\OneToMany(mappedBy: 'cardsList', targetEntity: Card::class, orphanRemoval: true)]
-    #[Groups(['read:CardsList'])]
+    /**
+     * @ORM\OneToMany(mappedBy="cardsList", targetEntity=Card::class, orphanRemoval=true)
+     * @Groups({"read:CardsList"})
+     */
     private $cards;
 
-    #[ORM\Column(type: 'bigint')]
-    #[Groups(['read:CardsList', 'write:CardsList'])]
+    /**
+     * @ORM\Column(type="bigint")
+     * @Groups({"read:CardsList", "write:CardsList"})
+     */
     private $currentCycle = 1;
 
     public function __construct()

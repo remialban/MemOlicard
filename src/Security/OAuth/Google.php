@@ -9,9 +9,11 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class Google
 {
-    public function __construct(private HttpClientInterface $httpClient)
+    private HttpClientInterface $httpClient;
+
+    public function __construct(HttpClientInterface $httpClient)
     {
-        
+        $this->httpClient = $httpClient;
     }
 
     public static function getLoginPageUrl()

@@ -3,13 +3,21 @@
 namespace App\Security;
 
 class OAuthResponse {
+    private string $firstName;
+    private string $lastName;
+    private string $email;
+    private string $id;
+
     public function __construct(
-        private string $firstName,
-        private string $lastName,
-        private string $email,
-        private string $id)
+        string $firstName,
+        string $lastName,
+        string $email,
+        string $id)
     {
-        
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->email = $email;
+        $this->id = $id;
     }
 
     public function getFirstName(): string

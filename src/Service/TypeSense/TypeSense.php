@@ -3,20 +3,27 @@
 namespace App\Service\TypeSense;
 
 use Typesense\Client;
-use Psr\Log\LoggerInterface;
 use App\Repository\UserRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
 class TypeSense {
+    private string $apiKey;
+    private string $host;
+    private string $port;
+    private string $protocol;
+    private UserRepository $userRepository;
+
     public function __construct(
-        private string $apiKey,
-        private string $host,
-        private string $port,
-        private string $protocol,
-        private UserRepository $userRepository,
-        private LoggerInterface $logger)
+        string $apiKey,
+        string $host,
+        string $port,
+        string $protocol,
+        UserRepository $userRepository)
     {
-        
+        $this->apiKey = $apiKey;
+        $this->host = $host;
+        $this->port = $port;
+        $this->protocol = $protocol;
+        $this->userRepository = $userRepository;
     }
 
     public function getClient()

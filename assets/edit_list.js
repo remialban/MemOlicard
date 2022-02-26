@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./edit_list/App.jsx";
 
-document.addEventListener("turbolinks:load", function() {
+export function run() {
     var element = document.getElementById("list");
 
     if (element != null)
@@ -12,4 +12,4 @@ document.addEventListener("turbolinks:load", function() {
             element
         ); 
     }
-});
+}

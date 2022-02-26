@@ -11,7 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends AbstractController
 {
-    #[Route('/dashboard/search', name: 'search')]
+    /**
+     * @Route("/dashboard/search", name="search")
+     */
     public function search(TypeSense $typeSense, Request $request, UserRepository $userRepository): Response
     {
         $response = $typeSense->search("users", $request->get("q", ""), 10, $request->get("page", 1));

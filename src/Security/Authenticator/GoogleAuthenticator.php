@@ -21,9 +21,17 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class GoogleAuthenticator extends AbstractAuthenticator
 {
-    public function __construct(private Google $google, private UserRepository $userRepository, private ManagerRegistry $managerRegistry, private RouterInterface $routerInterface)
+    private Google $google;
+    private UserRepository $userRepository;
+    private ManagerRegistry $managerRegistry;
+    private RouterInterface $routerInterface;
+
+    public function __construct(Google $google, UserRepository $userRepository, ManagerRegistry $managerRegistry, RouterInterface $routerInterface)
     {
-        
+        $this->google = $google;
+        $this->userRepository = $userRepository;
+        $this->managerRegistry = $managerRegistry;
+        $this->routerInterface = $routerInterface;
     }
     public function supports(Request $request): bool
     {

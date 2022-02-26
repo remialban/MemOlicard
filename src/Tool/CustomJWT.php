@@ -9,12 +9,12 @@ class CustomJWT
 {
     private string $publicKey;
 
-    private \OpenSSLAsymmetricKey $privateKey;
+    private $privateKey;
 
-    public function __construct(string $privateKeyPath)
+    public function __construct($privateKeyPath)
     {
         $this->privateKey = openssl_pkey_get_private(file_get_contents($privateKeyPath));
-        $this->publicKey = openssl_pkey_get_details($this->privateKey)["key"];        
+        $this->publicKey = openssl_pkey_get_details($this->privateKey)["key"];     
     }
 
     public function generateToken($payload): string

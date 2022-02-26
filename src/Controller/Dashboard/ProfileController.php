@@ -14,7 +14,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProfileController extends AbstractController
 {
-    #[Route('/dashboard/users/{username}', name: 'user_view')]
+    /**
+     * @Route("/dashboard/users/{username}", name="user_view")
+     */
     public function dashboard($username, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneBy([

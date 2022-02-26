@@ -20,7 +20,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegistrationController extends AbstractController
 {
-    #[Route('/signin', name: 'register')]
+    /**
+     * @Route("/signin", name="register")
+     */
     public function index(User $user = null, Request $request, ManagerRegistry $doctrine, UserPasswordHasherInterface $passwordHandler, MailerInterface $mailerInterface, CustomJWT $customJWT): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
@@ -68,7 +70,9 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('/login/check_email', name: 'check_email')]
+    /**
+     * @Route("/login/check_email", name="check_email")
+     */
     public function checkEmail(
         Request $request,
         UserRepository $userRepository,

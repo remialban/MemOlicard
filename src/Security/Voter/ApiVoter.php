@@ -17,7 +17,7 @@ class ApiVoter extends Voter
         $this->security = $security;
     }
 
-    protected function supports(string $attribute, mixed $subject): bool
+    protected function supports(string $attribute, $subject): bool
     {
         $supportsAttribute = in_array($attribute, ['API']);
         $supportsSubject = $subject instanceof Card || $subject instanceof CardsList;
@@ -25,7 +25,7 @@ class ApiVoter extends Voter
         return $supportsSubject && $supportsAttribute;
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $result = false;
         $class = get_class($subject);

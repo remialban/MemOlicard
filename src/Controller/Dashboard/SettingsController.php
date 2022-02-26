@@ -16,7 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SettingsController extends AbstractController
 {
-    #[Route('/dashboard/settings', name: 'dashboard_profile')]
+    /**
+     * @Route("/dashboard/settings", name="dashboard_profile")
+     */
     public function profile(Request $request, ManagerRegistry $managerRegistry, User $user = null): Response
     {
         if (!$user)
@@ -42,7 +44,9 @@ class SettingsController extends AbstractController
         ]);
     }
 
-    #[Route('/dashboard/settings/security', name: 'dashboard_security')]
+    /**
+     * @Route("/dashboard/settings/security", name="dashboard_security")
+     */
     public function security(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
     {
         $user = $this->getUser();
@@ -76,7 +80,9 @@ class SettingsController extends AbstractController
         }
     }
 
-    #[Route('/dashboard/logout', name: 'logout')]
+    /**
+     * @Route("/dashboard/logout", name="logout")
+     */
     public function logout(): Response
     {
         return $this->redirectToRoute('login');
