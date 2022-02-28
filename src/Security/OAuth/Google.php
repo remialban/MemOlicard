@@ -12,6 +12,8 @@ class Google
 {
     private HttpClientInterface $httpClient;
 
+    private UrlGeneratorInterface $router;
+
     public function __construct(HttpClientInterface $httpClient, UrlGeneratorInterface $router)
     {
         $this->httpClient = $httpClient;
@@ -32,16 +34,16 @@ class Google
             $response = $this->httpClient->request('POST', 'https://oauth2.googleapis.com/token', [
                 'headers' => [
                     'Content-Type' => 'application/x-www-form-urlencoded',
-                    'Content-Length' => 0,
+                    //'Content-Length' => 0,
                     'Accept' => '*/*',
-                    //'Connection' => 'keep-alice',
+                    'Connection' => 'keep-alice',
                 ],
                 'query' => [
                     'code' => $request->get('code'),
                     'client_id' => $_ENV['OAUTH_ID_GOOGLE'],
                     'client_secret' => $_ENV['OAUTH_SECRET_KEY_GOOGLE'],
                     'grant_type' => 'authorization_code',
-                    'redirect_uri' => 'http://localhost:8000/login?service=google',
+                    'redirect_uri' => self::getLoginPageUrl($this->router),
                 ],
             ]);
             $responseArray = json_decode($response->getContent(), true);
