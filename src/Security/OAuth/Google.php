@@ -23,7 +23,6 @@ class Google
         $redirectUri = $router->generate("login", [
             "service" => "google"
         ], UrlGeneratorInterface::ABSOLUTE_URL);
-        $redirectUri="http://localhost:8000/login?service=google";
         return "https://accounts.google.com/o/oauth2/v2/auth?client_id=" . $_ENV['OAUTH_ID_GOOGLE'] . "&redirect_uri=" . urlencode($redirectUri) . "&response_type=code&scope=openid%20profile%20email";
     }
 
