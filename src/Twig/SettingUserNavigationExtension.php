@@ -19,7 +19,7 @@ class SettingUserNavigationExtension extends AbstractExtension
         }
     }
 
-    public function getFilters()
+    public function getFilters(): array
     {
         return [new TwigFilter('navItemUser', [$this, 'navItemUserFilter'], ['is_safe' => ['html']])];
     }

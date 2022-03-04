@@ -34,7 +34,7 @@ class PopulateCommand extends Command
         ;        
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->typeSense->populate();
         return 1;
