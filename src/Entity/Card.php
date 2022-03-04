@@ -213,7 +213,7 @@ class Card
 
      * @ORM\PrePersist
      */
-    public function onPrePersist()
+    public function onPrePersist(): void
     {
         $dateTimeImmutable = new \DateTimeImmutable();
         $this->createdAt = $dateTimeImmutable;
@@ -226,7 +226,7 @@ class Card
 
      * @ORM\PreUpdate
      */
-    public function onPreUpdate()
+    public function onPreUpdate(): void
     {
         $this->updatedAt = new \DateTimeImmutable("now");
     }
