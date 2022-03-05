@@ -35,6 +35,7 @@ class AppFixtures extends Fixture
         $manager->persist($user);
 
         $users = [];
+        $users[] = $user;
 
         for ($i=0; $i < 20; $i++) { 
             $user = (new User())
@@ -79,6 +80,7 @@ class AppFixtures extends Fixture
             ;
             $manager->persist($card);
         }
+
         $manager->flush();
     }
 }
