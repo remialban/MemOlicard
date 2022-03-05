@@ -23,7 +23,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('edit_list', './assets/edit_list.js')
     .addEntry('learn_list', './assets/learn_list.js')
-    .addEntry('turbolinks', './assets/turbolinks.js')
+    //.addEntry('turbolinks', './assets/turbolinks.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -54,7 +54,7 @@ Encore
         config.useBuiltIns = 'usage';
         config.corejs = 3;
     })
-
+    .enableStimulusBridge('./assets/controllers.json')
     // enables Sass/SCSS support
     //.enableSassLoader()
 
