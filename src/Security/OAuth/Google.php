@@ -43,7 +43,9 @@ class Google
                     'client_id' => $_ENV['OAUTH_ID_GOOGLE'],
                     'client_secret' => $_ENV['OAUTH_SECRET_KEY_GOOGLE'],
                     'grant_type' => 'authorization_code',
-                    'redirect_uri' => self::getLoginPageUrl($this->router),
+                    'redirect_uri' => $this->router->generate("login", [
+                        "service" => "google"
+                    ], UrlGeneratorInterface::ABSOLUTE_URL),
                 ],
             ]);
             $responseArray = json_decode($response->getContent(), true);
