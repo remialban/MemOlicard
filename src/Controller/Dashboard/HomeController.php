@@ -40,7 +40,7 @@ class HomeController extends AbstractController
 
             $this->addFlash('success', 'Your list has been successfully created!');
 
-            return $this->redirectToRoute("dashboard_cards_list_edit", [
+            return $this->redirectToRoute("list_edit", [
                 "id" => $cardsList->getId()
             ]);
         }
