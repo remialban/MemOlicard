@@ -16,6 +16,7 @@ class ProfileType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('biography', TextareaType::class, [
+                "required" => false,
                 "attr" => [
                     "rows" => 10,
                 ],
