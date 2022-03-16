@@ -7,16 +7,17 @@ use VRia\Utils\NoDiacritic;
 use App\Security\OAuth\Google;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 class GoogleAuthenticator extends AbstractAuthenticator
@@ -91,7 +92,9 @@ class GoogleAuthenticator extends AbstractAuthenticator
                 'googleId' => $userIdentifier,
             ]);
             return $user;
-        }));
+        }), [
+            new RememberMeBadge(),
+        ]);
     }
     
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
