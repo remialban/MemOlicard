@@ -3,10 +3,11 @@
 namespace App\Security;
 
 use App\Entity\User;
-use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
+use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LoginSubscriber implements EventSubscriberInterface
 {
@@ -15,6 +16,12 @@ class LoginSubscriber implements EventSubscriberInterface
         $session = $loginSuccessEvent->getRequest()->getSession();
         $user = $loginSuccessEvent->getPassport()->getUser();
 
+        $redirectUri = $loginSuccessEvent->getRequest()->get("redirect_uri", false);
+
+        if ($redirectUri)
+        {
+            $loginSuccessEvent->setResponse(new RedirectResponse($redirectUri));
+        }
         if ($session instanceof Session && $user instanceof User)
         {
             $session->getFlashBag()->add("success", "Welcome " . $user->getFirstName() . "!");
