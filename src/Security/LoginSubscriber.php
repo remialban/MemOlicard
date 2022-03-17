@@ -16,12 +16,12 @@ class LoginSubscriber implements EventSubscriberInterface
         $session = $loginSuccessEvent->getRequest()->getSession();
         $user = $loginSuccessEvent->getPassport()->getUser();
 
-        $redirectUri = $loginSuccessEvent->getRequest()->get("redirect_uri", false);
+        // $redirectUri = $loginSuccessEvent->getRequest()->get("redirect_uri", false);
 
-        if ($redirectUri)
-        {
-            $loginSuccessEvent->setResponse(new RedirectResponse($redirectUri));
-        }
+        // if ($redirectUri)
+        // {
+        //     $loginSuccessEvent->setResponse(new RedirectResponse($redirectUri));
+        // }
         if ($session instanceof Session && $user instanceof User)
         {
             $session->getFlashBag()->add("success", "Welcome " . $user->getFirstName() . "!");
