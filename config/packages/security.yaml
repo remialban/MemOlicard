@@ -45,6 +45,7 @@ security:
     access_control:
         - { path: ^/dashboard, roles: ROLE_USER }
         - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
 
 when@test:
     security:
