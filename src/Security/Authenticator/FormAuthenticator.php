@@ -90,7 +90,7 @@ class FormAuthenticator extends AbstractAuthenticator
                             ]);
                         }                    
                     ), [
-                        new RememberMeBadge(),
+                        // new RememberMeBadge(),
                     ]);
                 } else 
                 {

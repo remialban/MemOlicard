@@ -93,7 +93,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
             ]);
             return $user;
         }), [
-            new RememberMeBadge(),
+            // new RememberMeBadge(),
         ]);
     }
     

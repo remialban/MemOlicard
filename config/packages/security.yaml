@@ -32,7 +32,7 @@ security:
             remember_me:
                 secret:   '%kernel.secret%' # required
                 lifetime: 15552000 # 6 months in seconds
-                always_remember_me: true
+                always_remember_me: false
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
