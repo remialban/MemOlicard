@@ -13,7 +13,7 @@ auth:
   signin: Sign in
   login_with: Login with {service}
   signin_with: Signin with {service}
-  forgort_password: Forgot password
+  forgot_password: Forgot password
   not_account: Do not have an account yet ? Sign up!
   already_account: Already have an account ? Log in!
 
