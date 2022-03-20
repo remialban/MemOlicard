@@ -7,6 +7,7 @@ navbar:
   profile: My profile
   settings: Settings
   log_out: Logout
+  policy: Privacy policy
 
 auth:
   login: Log in

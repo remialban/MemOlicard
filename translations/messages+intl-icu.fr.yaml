@@ -7,6 +7,7 @@ navbar:
   profile: Mon compte
   settings: Paramètres
   log_out: Se déconnecter
+  policy: Politique de confidentialités
 
 auth:
   login: Se connecter
