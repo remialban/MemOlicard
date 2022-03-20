@@ -1,14 +1,14 @@
 {% extends 'dashboard/settings/base.html.twig' %}
 
-{% block title %}Security{% endblock %}
+{% block title %}{{ 'dashboard.settings.security'|trans }}{% endblock %}
 
 {% block settings_content %}
-<h1>Security</h1>
+<h1>{{ 'dashboard.settings.security'|trans }}</h1>
 <hr/>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 <button type="submit" class="btn btn-primary">
-    <i class="bi bi-check2-circle"></i> Save
+    <i class="bi bi-check2-circle"></i> {{ 'form.default.save'|trans }}
 </button>
 {{ form_end(form) }}
 {% endblock %}

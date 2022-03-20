@@ -10,7 +10,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ path('dashboard_home') }}"><i class="bi bi-house-door-fill"></i> Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{ path('dashboard_home') }}"><i class="bi bi-house-door-fill"></i> {{ 'navbar.home'|trans }}</a>
                 </li>
             </ul>
             <ul class="navbar-nav mb-2 mb-lg-0">
@@ -19,12 +19,12 @@
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" data-turbolinks="false" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-fill"></i> My profile
+                        <i class="bi bi-person-fill"></i> {{ 'navbar.profile'|trans }}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ path('dashboard_profile') }}"><i class="bi bi-gear-fill"></i> Settings</a></li>
+                        <li><a class="dropdown-item" href="{{ path('dashboard_profile') }}"><i class="bi bi-gear-fill"></i> {{ 'navbar.settings'|trans }}</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" data-turbolinks="false" href="{{ path('logout') }}"><i class="bi bi-box-arrow-right"></i> Log out</a></li>
+                        <li><a class="dropdown-item" data-turbolinks="false" href="{{ path('logout') }}"><i class="bi bi-box-arrow-right"></i> {{ 'navbar.log_out'|trans }}</a></li>
                     </ul>
                   </li>
             </ul>

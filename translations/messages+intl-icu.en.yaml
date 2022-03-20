@@ -2,6 +2,12 @@ home:
   title: Welcome to MemOlicard
   subtitle: MemOlicard is a web platform to learn easily flashcards in using the Fabien Olicard method
 
+navbar:
+  home: Home
+  profile: My profile
+  settings: Settings
+  log_out: Logout
+
 auth:
   login: Log in
   signin: Sign in
@@ -20,9 +26,29 @@ form:
     password: Password
     new_password: Enter your new password
     confirm_password: Confirm the password
+    old_password: Current password
     submit: Submit
     save: Save
+    create: Create
+    name: Name
+    biography: Biography
 
   auth:
     username: Username or email
     password: Password
+
+dashboard:
+  title: Dashboard
+  create_list: Create a new list
+  last_update: "Last update: {date}"
+  current_lists: Your lists
+  settings:
+    profile: My profile
+    security: Security
+  list:
+    learn: Learn the list
+    edit: Edit the list
+
+actions:
+  close: Close
+  show: Show

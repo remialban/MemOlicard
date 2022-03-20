@@ -2,6 +2,12 @@ home:
   title: Bienvenue sur MemOlicard
   subtitle: MemOlicard est un site internet permetant d'apprendre facilement des listes de termes (flashcards) avec la méthode de Fabien Olicard
 
+navbar:
+  home: Accueil
+  profile: Mon compte
+  settings: Paramètres
+  log_out: Se déconnecter
+
 auth:
   login: Se connecter
   signin: S'inscrire
@@ -20,9 +26,29 @@ form:
     password: Mot de passe
     new_password: Entrez votre nouveau mot de passe
     confirm_password: Confirmez le mot de passe
+    old_password: Mot de passe actuel
     submit: Valider
     save: Enregistrer
+    create: Créer
+    name: Nom
+    biography: Biographie
 
   auth:
     username: Nom d'utilisateur ou adresse email
     password: Mot de passe
+
+dashboard:
+  title: Tableau de bord
+  create_list: Créer une nouvelle liste
+  last_update: "Dernière mise à jour : {date}"
+  current_lists: Vos listes
+  settings:
+    profile: Mon compte
+    security: Sécurité
+  list:
+    learn: Apprendre la liste
+    edit: Editer la liste
+
+actions:
+  close: Fermer
+  show: Afficher
