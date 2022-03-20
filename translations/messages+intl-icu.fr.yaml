@@ -1,0 +1,11 @@
+home:
+  title: Bienvenue sur MemOlicard
+  subtitle: MemOlicard est un site internet permetant d'apprendre facilement des listes de termes (flashcards) avec la méthode de Fabien Olicard
+
+auth:
+  login: Se connecter
+  signin: S'inscrire
+  login_with: Se connecter avec {service}
+  signin_with: S'inscrire avec {service}
+  forgot_password: Mot de passe oublié
+  not_account: Vous n'avez pas de compte ? Inscrivez-vous !

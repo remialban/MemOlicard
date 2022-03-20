@@ -1,0 +1,11 @@
+home:
+  title: Welcome to MemOlicard
+  subtitle: MemOlicard is a web platform to learn easily flashcards in using the Fabien Olicard method
+
+auth:
+  login: Log in
+  signin: Sign in
+  login_with: Login with {service}
+  signin_with: Signin with {service}
+  forgort_password: Forgot password
+  not_account: Do not have an account yet ? Sign up!
