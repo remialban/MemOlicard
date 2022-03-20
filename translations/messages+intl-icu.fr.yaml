@@ -9,3 +9,20 @@ auth:
   signin_with: S'inscrire avec {service}
   forgot_password: Mot de passe oublié
   not_account: Vous n'avez pas de compte ? Inscrivez-vous !
+  already_account: Vous avez déjà un compte ? Connectez-vous !
+
+form:
+  default:
+    email: Email
+    username: Nom d'utilisateur
+    first_name: Prénom
+    last_name: Nom
+    password: Mot de passe
+    new_password: Entrez votre nouveau mot de passe
+    confirm_password: Confirmez le mot de passe
+    submit: Valider
+    save: Enregistrer
+
+  auth:
+    username: Nom d'utilisateur ou adresse email
+    password: Mot de passe

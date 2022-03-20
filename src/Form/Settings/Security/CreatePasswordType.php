@@ -14,9 +14,11 @@ class CreatePasswordType extends AbstractType
     {
         $builder
             ->add('modifiedPassword', PasswordType::class, [
-                'label' => 'New password'
+                'label' => 'form.default.new_password'
             ])
-            ->add('confirmPassword', PasswordType::class)
+            ->add('confirmPassword', PasswordType::class, [
+                'label' => 'form.default.confirm_password'
+            ])
         ;
     }
 

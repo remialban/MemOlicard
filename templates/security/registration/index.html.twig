@@ -1,19 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Sign in{% endblock %}
+{% block title %}{{ 'auth.signin'|trans }}{% endblock %}
 
 {% block container %}
-<h1>Sign in</h1>
+<h1>{{ 'auth.signin'|trans }}</h1>
 <hr/>
 <a href="{{ google_url }}" class="btn btn-lg btn-danger w-100">
-    <i class="bi bi-google"></i> Signin with Google
+    <i class="bi bi-google"></i> {{ 'auth.signin_with'|trans({'%service%': 'Google'}) }}
 </a>
 <hr/>
 {{ form_start(form) }}
 {{ form_widget(form) }}
 <button type="submit" class="btn btn-primary">
-    <i class="bi bi-check2-circle"></i> Sign in
+    <i class="bi bi-check2-circle"></i> {{ 'auth.signin'|trans }}
 </button>
 {{ form_end(form) }}
-<a href="{{ path('login') }}">You have already an account?</a>
+<a href="{{ path('login') }}">{{ 'auth.already_account'|trans }}</a>
 {% endblock %}

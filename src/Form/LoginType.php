@@ -14,10 +14,11 @@ class LoginType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'required' => true,
-                'label' => 'Username or email',
+                'label' => 'form.auth.username',
             ])
             ->add('password', PasswordType::class, [
                 'required' => true,
+                'label' => 'form.auth.password',
             ])
         ;
     }

@@ -13,6 +13,7 @@ class ForgotPasswordType extends AbstractType
         $builder
             ->add('username', TextType::class, [
                 'required' => true,
+                'label' => 'form.auth.username',
             ])
         ;
     }

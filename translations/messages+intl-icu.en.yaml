@@ -9,3 +9,20 @@ auth:
   signin_with: Signin with {service}
   forgort_password: Forgot password
   not_account: Do not have an account yet ? Sign up!
+  already_account: Already have an account ? Log in!
+
+form:
+  default:
+    email: Email
+    username: Username
+    first_name: First name
+    last_name: Last name
+    password: Password
+    new_password: Enter your new password
+    confirm_password: Confirm the password
+    submit: Submit
+    save: Save
+
+  auth:
+    username: Username or email
+    password: Password
