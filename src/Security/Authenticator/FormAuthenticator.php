@@ -54,7 +54,7 @@ class FormAuthenticator extends AbstractAuthenticator
     {
         $form = $this->formFactory->create(LoginType::class);
         $form->handleRequest($request);
-        return $request->getPathInfo() == "/login" && $form->isSubmitted() && $form->isValid();
+        return $request->attributes->get("_route") == "login" && $form->isSubmitted() && $form->isValid();
     }
 
     public function authenticate(Request $request): Passport

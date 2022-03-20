@@ -36,7 +36,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
     }
     public function supports(Request $request): bool
     {
-        return $request->getPathInfo() == "/login" && $request->query->has('code') && $request->query->get('service', false) == "google";
+        return $request->attributes->get("_route") == "login" && $request->query->has('code') && $request->query->get('service', false) == "google";
     }
 
     public function authenticate(Request $request): Passport
