@@ -68,8 +68,9 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
     {
         $request = $event->getRequest();
 
+        $pathInfo = $request->getPathInfo();
         // Ignore sub-requests and all URLs but the homepage
-        if (!$event->isMainRequest() || '/' !== $request->getPathInfo()) {
+        if (in_array(explode("/", $pathInfo)[1], $this->locales)) {
             return;
         }
         // Ignore requests from referrers with the same HTTP host in order to prevent
@@ -81,9 +82,8 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
 
         $preferredLanguage = $request->getPreferredLanguage($this->locales);
 
-        if ($preferredLanguage !== $this->defaultLocale) {
-            $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
-            $event->setResponse($response);
-        }
+        $response = new RedirectResponse($this->urlGenerator->generate('homepage', ['_locale' => $preferredLanguage]));
+        $response = new RedirectResponse("/" . $preferredLanguage . $request->getRequestUri());
+        $event->setResponse($response);
     }
 }
