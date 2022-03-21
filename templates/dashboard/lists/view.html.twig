@@ -64,7 +64,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                {{ 'dashboard.list.delete.warning'|trans({'name': cardsList.name}) }}
+                {{ 'dashboard.list.delete.warning'|trans({'name': cardsList.name|escape})|raw }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'actions.close'|trans }}</button>

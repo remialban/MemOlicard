@@ -51,7 +51,7 @@ dashboard:
     edit: Edit the list
     delete:
       title: Delete the list
-      warning: "WARNING : Are you sure you want to delete the list {name} ? If you delete this list, this action is irreversible."
+      warning: "WARNING : Are you sure you want to delete the list <b>{name}</b> ? If you delete this list, this action is irreversible."
 
 actions:
   close: Close
