@@ -4,9 +4,9 @@
 
 {% block body %}
 <div class="bg-primary text-light">
-    <div class="vh-100 vw-100 d-flex flex-column align-items-center justify-content-center">
-        <h1>{{ 'home.title'|trans }}</h1>
-        <h6 class="p-4">{{ 'home.subtitle'|trans }}</h6>
+    <div class="vh-100 d-flex flex-column align-items-center justify-content-center">
+        <h1 class="text-center">{{ 'home.title'|trans }}</h1>
+        <h6 class="p-4 text-center">{{ 'home.subtitle'|trans }}</h6>
         <div>
             <a href="{{ path('login') }}" class="btn btn-outline-dark btn-lg">{{ 'auth.login'|trans }}</a>
             <a href="{{ path('register') }}" class="btn btn-dark btn-lg">{{ 'auth.signin'|trans }}</a>
