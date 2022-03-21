@@ -26,6 +26,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="card mb-3 text-center">
+                <div class="card-body">
+                    <p class="card-text">
+                        <a type="button" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-pencil-square"></i> {{ 'dashboard.list.delete.title'|trans }}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
     <table class="table">
         <thead class="table-primary">
@@ -46,5 +55,23 @@
     </table>
 </div>
 
-
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        {{ form_start(removeForm) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ 'dashboard.list.delete.title'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ 'dashboard.list.delete.warning'|trans({'name': cardsList.name}) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'actions.close'|trans }}</button>
+                <button type="submit" class="btn btn-danger">{{ 'dashboard.list.delete.title'|trans }}</button>
+            </div>
+        {{ form_end(removeForm) }}
+      </div>
+    </div>
+  </div>
 {% endblock %}

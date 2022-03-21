@@ -49,6 +49,9 @@ dashboard:
   list:
     learn: Apprendre la liste
     edit: Editer la liste
+    delete:
+      title: Supprimer la liste
+      warning: "ATTENTION : Êtes-vous sûr de vouloir supprimer la liste {name} ? Si vous supprimez cette liste, cette action est irréversible"
 
 actions:
   close: Fermer
