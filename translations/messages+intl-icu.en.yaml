@@ -8,6 +8,7 @@ navbar:
   settings: Settings
   log_out: Logout
   policy: Privacy policy
+  blog: MemOliBlog
 
 auth:
   login: Log in
@@ -83,3 +84,6 @@ flash:
       already_account: You have already an account with the {email} email.
     logout: You have been successfully disconnected! Goodbye!
     login_successful: Welcome {name}!
+
+blog:
+  read_more: Read more

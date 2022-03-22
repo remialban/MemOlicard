@@ -10,7 +10,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class BlogController extends AbstractController
 {
     /**
-     * @Route("/blog/{slug}", name="app_blog")
+     * @Route("/blog", name="blog")
+     */
+    public function blog(PostRepository $postRepository)
+    {
+        $posts = $postRepository->findAll();
+        return $this->render('blog/list.html.twig', [
+            'posts' => $posts,
+        ]);
+    }
+
+    /**
+     * @Route("/blog/{slug}", name="blog_view")
      */
     public function readPost($slug, PostRepository $postRepository): Response
     {
