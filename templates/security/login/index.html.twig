@@ -14,8 +14,8 @@
 {{ form_widget(form) }}
 <button type="submit" class="btn btn-primary">{{ 'auth.login'|trans }}</button>
 <br/>
+{{ form_end(form) }}
 <a href="{{ path('register') }}">{{ 'auth.not_account'|trans }}</a>
 <br />
 <a href="{{ path('login_forgot_password') }}">{{ 'auth.forgot_password'|trans }}</a>
-{{ form_end(form) }}
 {% endblock %}
