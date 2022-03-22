@@ -8,9 +8,17 @@ use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginSubscriber implements EventSubscriberInterface
 {
+    private TranslatorInterface $translator;
+
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     public function onLoginSuccess(LoginSuccessEvent $loginSuccessEvent)
     {
         $session = $loginSuccessEvent->getRequest()->getSession();
@@ -24,7 +32,7 @@ class LoginSubscriber implements EventSubscriberInterface
         // }
         if ($session instanceof Session && $user instanceof User)
         {
-            $session->getFlashBag()->add("success", "Welcome " . $user->getFirstName() . "!");
+            $session->getFlashBag()->add("success", $this->translator->trans('flash.auth.login_successful', ['name' => $user->getFirstName()]));
         }
     }
 
@@ -34,7 +42,7 @@ class LoginSubscriber implements EventSubscriberInterface
 
         if ($session instanceof Session)
         {
-            $session->getFlashBag()->add("success", "You have been successfully disconnected!");
+            $session->getFlashBag()->add("success", $this->translator->trans('flash.auth.logout'));
         }
     }
 

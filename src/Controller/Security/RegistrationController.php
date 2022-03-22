@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
@@ -31,7 +32,8 @@ class RegistrationController extends AbstractController
         UserPasswordHasherInterface $passwordHandler,
         MailerInterface $mailerInterface,
         CustomJWT $customJWT,
-        UrlGeneratorInterface $router): Response
+        UrlGeneratorInterface $router,
+        TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
         if ($user)
@@ -54,7 +56,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Your registration has been validated you are now registered on our site. We have sent to you an email in order to confirm that you are the owner of this email address.');
+            $this->addFlash('success', $translator->trans('flash.auth.register_successful'));
             $email = (new TemplatedEmail())
                 ->from("remi.alban@hotmail.com")
                 ->to($user->getEmail())
@@ -85,7 +87,8 @@ class RegistrationController extends AbstractController
         Request $request,
         UserRepository $userRepository,
         CustomJWT $customJWT,
-        ManagerRegistry $managerRegistry
+        ManagerRegistry $managerRegistry,
+        TranslatorInterface $translator
     )
     {
         $token = $request->get("token");
@@ -105,7 +108,7 @@ class RegistrationController extends AbstractController
                     $user->setEmailIsChecked(true);
                     $managerRegistry->getManager()->persist($user);
                     $managerRegistry->getManager()->flush();
-                    $this->addFlash("success", "Your email has been verified. Please login.");
+                    $this->addFlash("success", $translator->trans('auth.validation_successful'));
                     return $this->redirectToRoute('login');
                 }
             } catch (SignatureInvalidException $exception) {}

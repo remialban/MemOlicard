@@ -21,6 +21,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginController extends AbstractController
 {
@@ -51,7 +52,8 @@ class LoginController extends AbstractController
         MailerInterface $mailer,
         CustomJWT $customJWT,
         ManagerRegistry $managerRegistry,
-        UserPasswordHasherInterface $userPasswordHasherInterface)
+        UserPasswordHasherInterface $userPasswordHasherInterface,
+        TranslatorInterface $translator)
     {
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
@@ -83,7 +85,7 @@ class LoginController extends AbstractController
                             $managerRegistry->getManager()->persist($user);
                             $managerRegistry->getManager()->flush();
 
-                            $this->addFlash("success", "Your password has been changed. Please login.");
+                            $this->addFlash("success", $translator->trans('flash.auth.forgot_password.password_update_successful'));
 
                             return $this->redirectToRoute("login");
                         }
@@ -98,7 +100,7 @@ class LoginController extends AbstractController
                 }
             } catch (Exception $exception)
             {
-                $this->addFlash("danger", "This link is invalid or has expired. Please resubmit your request.");
+                $this->addFlash("danger", $translator->trans('flash.auth.forgot_password.expired_link'));
                 return $this->redirectToRoute("login_forgot_password");
             }
 
@@ -141,10 +143,10 @@ class LoginController extends AbstractController
                         ])
                     ;
                     $mailer->send($email);
-                    $this->addFlash("success", "You have received an email in your mailbox to change your password");
+                    $this->addFlash("success", $translator->trans('flash.auth.forgot_password.sent_email'));
                     return $this->redirectToRoute("login");
                 } else {
-                    $this->addFlash("danger", "There is no user associated with this email or username.");
+                    $this->addFlash("danger", $translator->trans('flash.auth.forgot_password.user_not_found'));
                 }
             }
         }

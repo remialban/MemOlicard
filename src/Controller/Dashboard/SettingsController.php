@@ -13,13 +13,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SettingsController extends AbstractController
 {
     /**
      * @Route("/dashboard/settings", name="dashboard_profile")
      */
-    public function profile(Request $request, ManagerRegistry $managerRegistry, User $user = null): Response
+    public function profile(
+        Request $request,
+        ManagerRegistry $managerRegistry,
+        User $user = null,
+        TranslatorInterface $translator): Response
     {
         if (!$user)
         {
@@ -36,7 +41,7 @@ class SettingsController extends AbstractController
             $doctrine->persist($user);
             $doctrine->flush();
 
-            $this->addFlash("success", "Your profile has been successfully modified!");
+            $this->addFlash("success", $translator->trans('flash.profile.update_successful'));
         }
 
         return $this->render('dashboard/settings/profile.html.twig', [
@@ -47,7 +52,11 @@ class SettingsController extends AbstractController
     /**
      * @Route("/dashboard/settings/security", name="dashboard_security")
      */
-    public function security(Request $request, ManagerRegistry $managerRegistry, UserPasswordHasherInterface $userPasswordHasherInterface, UserRepository $userRepository): Response
+    public function security(
+        Request $request,
+        ManagerRegistry $managerRegistry,
+        UserPasswordHasherInterface $userPasswordHasherInterface,
+        TranslatorInterface $translator): Response
     {
         $user = $this->getUser();
         if ($user instanceof User)
@@ -71,7 +80,7 @@ class SettingsController extends AbstractController
                 $em->persist($user);
                 $em->flush();
     
-                $this->addFlash('success', "The password has been successfully modified");
+                $this->addFlash('success', $translator->trans('flash.profile.password_update_successful'));
             }
     
             return $this->render('dashboard/settings/security.html.twig', [

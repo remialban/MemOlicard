@@ -25,6 +25,7 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class FormAuthenticator extends AbstractAuthenticator
 {
@@ -34,6 +35,7 @@ class FormAuthenticator extends AbstractAuthenticator
     private UserPasswordHasherInterface $userPasswordHasherInterface;
     private CustomJWT $customJWT;
     private MailerInterface $mailerInterface;
+    private TranslatorInterface $translator;
 
     public function __construct(
         UserRepository $userRepository,
@@ -41,7 +43,8 @@ class FormAuthenticator extends AbstractAuthenticator
         FormFactoryInterface $formFactory,
         UserPasswordHasherInterface $userPasswordHasherInterface,
         CustomJWT $customJWT,
-        MailerInterface $mailerInterface)
+        MailerInterface $mailerInterface,
+        TranslatorInterface $translator)
     {
         $this->userRepository = $userRepository;
         $this->managerRegistry = $managerRegistry;
@@ -49,6 +52,7 @@ class FormAuthenticator extends AbstractAuthenticator
         $this->userPasswordHasherInterface = $userPasswordHasherInterface;
         $this->customJWT = $customJWT;
         $this->mailerInterface = $mailerInterface;
+        $this->translator = $translator;
     }
     public function supports(Request $request): bool
     {
@@ -112,15 +116,15 @@ class FormAuthenticator extends AbstractAuthenticator
                     $session = $request->getSession();
                     if ($session instanceof Session)
                     {
-                        $session->getFlashBag()->add("warning", "You must confirm your registration. We have sent to you an email in order to confirm that you are the owner of this email address.");
+                        $session->getFlashBag()->add("warning", $this->translator->trans('flash.auth.error_confirm_email'));
                     }
                     throw new AuthenticationException();
                 }
             } else {
-                throw new AuthenticationException('Your password is incorrect.');
+                throw new AuthenticationException($this->translator->trans('flash.auth.invalid_password'));
             }
         } else {
-            throw new AuthenticationException('Your email or username is incorrect.');
+            throw new AuthenticationException($this->translator->trans('flash.auth.invalid_username'));
         }
     }
     

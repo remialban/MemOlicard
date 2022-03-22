@@ -6,10 +6,10 @@ use App\Entity\CardsList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ListController extends AbstractController
 {
@@ -17,7 +17,7 @@ class ListController extends AbstractController
      * @Route("/dashboard/list/{id}", name="list_view")
      */
     public function view(CardsList $cardsList,
-        JWTTokenManagerInterface $JWTManager,
+        TranslatorInterface $translator,
         Request $request,
         ManagerRegistry $managerRegistry)
     {
@@ -37,7 +37,7 @@ class ListController extends AbstractController
             $manager = $managerRegistry->getManager();
             $manager->remove($cardsList);
             $manager->flush();
-            $this->addFlash("success", "Your list has been deleted");
+            $this->addFlash("success", $translator->trans('flash.list.delete_successful'));
             return $this->redirectToRoute("dashboard_home");
         }
 

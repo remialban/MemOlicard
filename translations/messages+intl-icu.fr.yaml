@@ -56,3 +56,30 @@ dashboard:
 actions:
   close: Fermer
   show: Afficher
+
+flash:
+  list:
+      create_successful: Votre liste a bien été créé
+      delete_successful: Votre liste a bien été supprimé
+
+  profile:
+    update_successful: Votre compte a bien été modifié
+    password_update_successful: Votre mot de passe a bien été modifié
+
+  auth:
+    forgot_password:
+      password_update_successful: Votre mot de passe a bien été changé. Merci de vous connecter.
+      expired_link: Ce lien est invalide ou a été expiré. Merci de soumettre à nouveau votre requette.
+      sent_email: Vous avez reçu un email dans votre boîte mail pour changer votre mot de passe.
+      user_not_found: Il n'y a pas d'utilisateur associé à ce nom d'utilisateur ou à ce mot de passe.
+
+    register_successful: Votre inscription a bien été validé. Nous vous avons envoyé un email pour confirmer que vous êtes bien le propriétaire cet adresse email.
+    validation_successful: Votre email a bien été vérifié. Merci de vous connecter.
+    error_confirm_email: Vous devez confirmez votre inscription. Nous vous avons envoyé un email pour confirmer que vous êtes bien le propriétaire de cet adresse email.
+    invalid_username: Votre nom d'utilisateur ou votre email est incorrect.
+    invalid_password: Votre mot de passe est incorrect.
+    oauth:
+      register_successful: Votre inscription a bien été validé. Vous êtes désormais inscris sur notre site !
+      already_account: Vous avez déjà un compte avec l'adresse email {email}.
+    logout: Vous avez bien été déconnecté ! A bientôt !
+    login_successful: Bienvenue {name} !

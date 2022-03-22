@@ -19,6 +19,7 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class GoogleAuthenticator extends AbstractAuthenticator
 {
@@ -26,13 +27,15 @@ class GoogleAuthenticator extends AbstractAuthenticator
     private UserRepository $userRepository;
     private ManagerRegistry $managerRegistry;
     private RouterInterface $routerInterface;
+    private TranslatorInterface $translator;
 
-    public function __construct(Google $google, UserRepository $userRepository, ManagerRegistry $managerRegistry, RouterInterface $routerInterface)
+    public function __construct(Google $google, UserRepository $userRepository, ManagerRegistry $managerRegistry, RouterInterface $routerInterface, TranslatorInterface $translator)
     {
         $this->google = $google;
         $this->userRepository = $userRepository;
         $this->managerRegistry = $managerRegistry;
         $this->routerInterface = $routerInterface;
+        $this->translator = $translator;
     }
     public function supports(Request $request): bool
     {
@@ -59,7 +62,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
                 $session = $request->getSession();
                 if ($session instanceof Session)
                 {
-                    $session->getFlashBag()->add('danger', 'You have already an account with the ' . $response->getEmail() . ' email.');
+                    $session->getFlashBag()->add('danger', $this->translator->trans('flash.auth.oauth.already_account', ['email' => $response->getEmail()]));
                     throw new AuthenticationException();
                 }
             } else
@@ -82,7 +85,7 @@ class GoogleAuthenticator extends AbstractAuthenticator
                 $session = $request->getSession();
                 if ($session instanceof Session)
                 {
-                    $session->getFlashBag()->add('success', 'Your registration has been validated you are now registered on our site.');
+                    $session->getFlashBag()->add('success', $this->translator->trans('auth.oauth.register_successful'));
                 }
             }
         }

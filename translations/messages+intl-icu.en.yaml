@@ -56,3 +56,30 @@ dashboard:
 actions:
   close: Close
   show: Show
+
+flash:
+  list:
+    create_successful: Your list has been successfully created
+    delete_successful: Your list has been deleted
+
+  profile:
+    update_successful: Your profile has been successfully modified
+    password_update_successful: Your password has been successfully modified
+
+  auth:
+    forgot_password:
+      password_update_successful: Your password has been changed. Please login.
+      expired_link: This link is invalid or has expired. Please resubmit your request.
+      sent_email: You have received an email in your mailbox to change your password
+      user_not_found: There is no user associated with this email or username.      
+
+    register_successful: Your registration has been validated you are now registered on our site. We have sent to you an email in order to confirm that you are the owner of this email address.
+    validation_successful: Your email has been verified. Please login.
+    error_confirm_email: You must confirm your registration. We have sent to you an email in order to confirm that you are the owner of this email address.
+    invalid_username: Your email or username is incorrect.
+    invalid_password: Your password is incorrect.
+    oauth:
+      register_successful: Your registration has been validated. You are now registered on our site!
+      already_account: You have already an account with the {email} email.
+    logout: You have been successfully disconnected! Goodbye!
+    login_successful: Welcome {name}!

@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomeController extends AbstractController
@@ -16,7 +17,11 @@ class HomeController extends AbstractController
     /**
      * @Route("/dashboard", name="dashboard_home")
      */
-    public function dashboard(CardsList $cardsList = null, Request $request, ManagerRegistry $doctrine, CardsListRepository $cardsListRepository): Response
+    public function dashboard(CardsList $cardsList = null,
+        Request $request,
+        ManagerRegistry $doctrine,
+        CardsListRepository $cardsListRepository,
+        TranslatorInterface $translator): Response
     {
         if (!$cardsList)
         {
@@ -38,7 +43,7 @@ class HomeController extends AbstractController
             $entityManager->persist($cardsList);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Your list has been successfully created!');
+            $this->addFlash('success', $translator->trans('flash.list.create_successful'));
 
             return $this->redirectToRoute("list_edit", [
                 "id" => $cardsList->getId()
