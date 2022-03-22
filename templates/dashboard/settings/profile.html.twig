@@ -12,4 +12,27 @@
     <i class="bi bi-check2-circle"></i> {{ 'form.default.save'|trans }}
 </button>
 {{ form_end(form) }}
+<a type="button" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-pencil-square"></i> {{ 'dashboard.settings.delete.title'|trans }}</a>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        {{ form_start(deleteAccountForm) }}
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ 'dashboard.settings.delete.title'|trans }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{ 'dashboard.settings.delete.warning'|trans }}
+                <hr />
+                {{ form_widget(deleteAccountForm) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'actions.close'|trans }}</button>
+                <button type="submit" class="btn btn-danger">{{ 'dashboard.settings.delete.title'|trans }}</button>
+            </div>
+        {{ form_end(deleteAccountForm) }}
+      </div>
+    </div>
+  </div>
 {% endblock %}

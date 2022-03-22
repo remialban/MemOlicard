@@ -47,6 +47,10 @@ dashboard:
   settings:
     profile: My profile
     security: Security
+    delete:
+      title: Delete your account
+      warning: "WARNING: Are you sure you want to delete your account ? If you delete your account, this actions is irreversible. All data (list, ...) that you have created will remove."
+
   list:
     learn: Learn the list
     edit: Edit the list
@@ -66,6 +70,8 @@ flash:
   profile:
     update_successful: Your profile has been successfully modified
     password_update_successful: Your password has been successfully modified
+    delete:
+      delete_email: We have sent to you an email in order to confirm the deletion of your account
 
   auth:
     forgot_password:

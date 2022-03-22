@@ -47,6 +47,10 @@ dashboard:
   settings:
     profile: Mon compte
     security: Sécurité
+    delete:
+      title: Supprimer votre compte
+      warning: "ATTENTION : Êtes-vous sûr de vouloir supprimer votre compte ? Si vous supprimez votre compte, vous le supprimer de manière permanente. Toutes vos données (informations personnelles, listes, ...) seront supprimés."
+
   list:
     learn: Apprendre la liste
     edit: Editer la liste
@@ -66,6 +70,8 @@ flash:
   profile:
     update_successful: Votre compte a bien été modifié
     password_update_successful: Votre mot de passe a bien été modifié
+    delete:
+      delete_email: Un lien vous a été envoyé dans votre boîte mail afin de confirmer la supression de votre compte
 
   auth:
     forgot_password:

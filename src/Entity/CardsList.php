@@ -74,7 +74,7 @@ class CardsList
     private $name;
 
     /**
-     * @ORM\OneToMany(mappedBy="cardsList", targetEntity=Card::class, orphanRemoval=true)
+     * @ORM\OneToMany(mappedBy="cardsList", targetEntity=Card::class, orphanRemoval=true, cascade={"persist", "remove"}, orphanRemoval=true)
      * @Groups({"read:CardsList"})
      */
     private $cards;

@@ -32,19 +32,19 @@ class TypeSenseEventListener implements EventSubscriberInterface
 
     public function postPersist(LifecycleEventArgs $args)
     {
-        $object = $args->getObject();
-        if ($object instanceof User)
-        {
-            $this->typesense->update($object);
-        }
+        // $object = $args->getObject();
+        // if ($object instanceof User)
+        // {
+        //     $this->typesense->update($object);
+        // }
     }
 
     public function postUpdate(LifecycleEventArgs $args)
     {
-        $object = $args->getObject();
-        if ($object instanceof User)
-        {
-            $this->typesense->update($object);
-        }
+        // $object = $args->getObject();
+        // if ($object instanceof User)
+        // {
+        //     $this->typesense->update($object);
+        // }
     }
 }

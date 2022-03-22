@@ -3,17 +3,18 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\User;
-use App\Form\Settings\Security\CreatePasswordType;
 use App\Form\Settings\ProfileType;
-use App\Form\Settings\Security\ChangePasswordType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\Settings\Security\ChangePasswordType;
+use App\Form\Settings\Security\CreatePasswordType;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SettingsController extends AbstractController
 {
@@ -24,7 +25,8 @@ class SettingsController extends AbstractController
         Request $request,
         ManagerRegistry $managerRegistry,
         User $user = null,
-        TranslatorInterface $translator): Response
+        TranslatorInterface $translator,
+        UserPasswordHasherInterface $encoder): Response
     {
         if (!$user)
         {
@@ -33,6 +35,12 @@ class SettingsController extends AbstractController
 
         $form = $this->createForm(ProfileType::class, $user);
         $form->handleRequest($request);
+
+        $deleteAccountForm = $this->createFormBuilder()
+            ->add('password', PasswordType::class, ['label' => 'form.default.password'])
+            ->getForm()
+        ;
+        $deleteAccountForm->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
@@ -44,8 +52,20 @@ class SettingsController extends AbstractController
             $this->addFlash("success", $translator->trans('flash.profile.update_successful'));
         }
 
+        if ($deleteAccountForm->isSubmitted() && $deleteAccountForm->isValid())
+        {
+            $data = $deleteAccountForm->getData();
+            if ($encoder->isPasswordValid($this->getUser(), $data['password']))
+            {
+                $this->addFlash('success', $translator->trans('flash.profile.delete.delete_email'));
+            } else {
+                $this->addFlash('warning', $translator->trans('flash.auth.invalid_password'));
+            }
+        }
+
         return $this->render('dashboard/settings/profile.html.twig', [
             'form' => $form->createView(),
+            'deleteAccountForm' => $deleteAccountForm->createView(),
         ]);
     }
 

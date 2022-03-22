@@ -106,7 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $username;
 
     /**
-     * @ORM\OneToMany(mappedBy="user", targetEntity=CardsList::class)
+     * @ORM\OneToMany(mappedBy="user", targetEntity=CardsList::class, cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $cardsLists;
 
