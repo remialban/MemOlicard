@@ -6,15 +6,23 @@ use App\Entity\CardsList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @Route(path={
+ *     "en": "/lists",
+ *     "fr": "/listes"
+ * }, name="list_")
+ * @IsGranted("ROLE_USER")
+ */
 class ListController extends AbstractController
 {
     /**
-     * @Route("/dashboard/list/{id}", name="list_view")
+     * @Route("/{id}", name="view")
      */
     public function view(CardsList $cardsList,
         TranslatorInterface $translator,
@@ -48,7 +56,10 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard/lists/{id}/edit", name="list_edit")
+     * @Route(path={
+     *     "en": "/{id}/edit",
+     *     "fr": "/{id}/modifier"
+     * }, name="edit")
      */
     public function edit(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {
@@ -64,7 +75,10 @@ class ListController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard/lists/{id}/learn", name="list_learn")
+     * @Route(path={
+     *     "en": "/{id}/learn",
+     *     "fr": "/{id}/apprendre"
+     * }, name="learn")
      */
     public function learn(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
     {

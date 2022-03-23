@@ -23,7 +23,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegistrationController extends AbstractController
 {
     /**
-     * @Route("/signin", name="register")
+     * @Route(path={
+     *     "en": "/signin",
+     *     "fr": "/inscription"
+     * }, name="register")
      */
     public function index(
         User $user = null,

@@ -15,7 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/dashboard", name="dashboard_home")
+     * @Route(path={
+     *     "en": "/dashboard",
+     *     "fr": "/tableau-de-bord"
+     * }, name="dashboard_home")
      */
     public function dashboard(CardsList $cardsList = null,
         Request $request,

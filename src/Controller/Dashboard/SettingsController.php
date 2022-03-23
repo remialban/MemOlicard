@@ -13,13 +13,24 @@ use App\Form\Settings\Security\ChangePasswordType;
 use App\Form\Settings\Security\CreatePasswordType;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * @Route(path={
+ *     "en": "/settings",
+ *     "fr": "/parametre"
+ * }, name="settings_")
+ * @IsGranted("ROLE_USER")
+ */
 class SettingsController extends AbstractController
 {
     /**
-     * @Route("/dashboard/settings", name="dashboard_profile")
+     * @Route(path={
+     *     "en": "/my-profile",
+     *     "fr": "/mon-compte"
+     * }, name="profile")
      */
     public function profile(
         Request $request,
@@ -70,7 +81,10 @@ class SettingsController extends AbstractController
     }
 
     /**
-     * @Route("/dashboard/settings/security", name="dashboard_security")
+     * @Route(path={
+     *     "en": "/security",
+     *     "fr": "/securite"
+     * }, name="security")
      */
     public function security(
         Request $request,
@@ -107,13 +121,5 @@ class SettingsController extends AbstractController
                 'form' => $form->createView(),
             ]);   
         }
-    }
-
-    /**
-     * @Route("/dashboard/logout", name="logout")
-     */
-    public function logout(): Response
-    {
-        return $this->redirectToRoute('login');
     }
 }

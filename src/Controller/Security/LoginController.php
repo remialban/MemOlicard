@@ -26,7 +26,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LoginController extends AbstractController
 {
     /**
-     * @Route("/login", name="login")
+     * @Route(path={
+     *     "en": "/login",
+     *     "fr": "/se-connecter" 
+     * }, name="login")
      */
     public function index(
         AuthenticationUtils $authenticationUtils,
@@ -44,7 +47,10 @@ class LoginController extends AbstractController
     }
 
     /**
-     * @Route("/login/forgot-password", name="login_forgot_password")
+     * @Route(path={
+     *     "en": "/login/forgot-password",
+     *     "fr": "/se-connecter/mot-de-passe-oublie"
+     * }, name="login_forgot_password")
      */
     public function forgotPassword(
         Request $request,
@@ -154,5 +160,16 @@ class LoginController extends AbstractController
         return $this->render('security/login/forgot_password.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @Route(path={
+     *     "en": "/logout",
+     *     "fr": "/se-deconnecter"
+     * }, name="logout")
+     */
+    public function logout(): Response
+    {
+        return $this->redirectToRoute('login');
     }
 }
