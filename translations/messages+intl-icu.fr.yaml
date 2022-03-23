@@ -71,7 +71,7 @@ flash:
     update_successful: Votre compte a bien été modifié
     password_update_successful: Votre mot de passe a bien été modifié
     delete:
-      delete_email: Un lien vous a été envoyé dans votre boîte mail afin de confirmer la supression de votre compte
+      success: Votre compte a bien été supprimé !
 
   auth:
     forgot_password:

@@ -71,7 +71,7 @@ flash:
     update_successful: Your profile has been successfully modified
     password_update_successful: Your password has been successfully modified
     delete:
-      delete_email: We have sent to you an email in order to confirm the deletion of your account
+      success: Your account has been successfully deleted!
 
   auth:
     forgot_password:

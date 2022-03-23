@@ -3,10 +3,13 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\User;
+use App\Tool\CustomJWT;
 use App\Form\Settings\ProfileType;
 use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Settings\Security\ChangePasswordType;
@@ -16,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * @Route(path={
@@ -37,7 +41,8 @@ class SettingsController extends AbstractController
         ManagerRegistry $managerRegistry,
         User $user = null,
         TranslatorInterface $translator,
-        UserPasswordHasherInterface $encoder): Response
+        UserPasswordHasherInterface $encoder,
+        TokenStorageInterface $tokenStorage): Response
     {
         if (!$user)
         {
@@ -68,7 +73,15 @@ class SettingsController extends AbstractController
             $data = $deleteAccountForm->getData();
             if ($encoder->isPasswordValid($this->getUser(), $data['password']))
             {
-                $this->addFlash('success', $translator->trans('flash.profile.delete.delete_email'));
+                $user = $this->getUser();
+                $session = $request->getSession();
+                $session->invalidate();
+                $tokenStorage->setToken();
+                $doctrine = $managerRegistry->getManager();
+                $doctrine->remove($user);
+                $doctrine->flush();
+                $this->addFlash('success', $translator->trans('flash.profile.delete.success'));
+                return $this->redirectToRoute("home");
             } else {
                 $this->addFlash('warning', $translator->trans('flash.auth.invalid_password'));
             }
@@ -116,7 +129,7 @@ class SettingsController extends AbstractController
     
                 $this->addFlash('success', $translator->trans('flash.profile.password_update_successful'));
             }
-    
+
             return $this->render('dashboard/settings/security.html.twig', [
                 'form' => $form->createView(),
             ]);   
