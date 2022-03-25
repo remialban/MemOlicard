@@ -61,6 +61,7 @@ dashboard:
 actions:
   close: Fermer
   show: Afficher
+  back: Retour
 
 flash:
   list:

@@ -61,6 +61,7 @@ dashboard:
 actions:
   close: Close
   show: Show
+  back: Back
 
 flash:
   list:

@@ -7,6 +7,9 @@
 <div class="container">
     <h1>Edit {{ cardsList.name }} list</h1>
     <hr/>
+    <p>
+        <a href="{{ path('list_view', {id: cardsList.id}) }}" class="btn btn-primary btn-sm"><i class="bi bi-arrow-left-circle"></i> Back</a>
+    </p>
     <div id="list" data-id="{{ cardsList.id }}" data-token="{{ token }}"></div>
 </div>
 
