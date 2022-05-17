@@ -7,7 +7,7 @@
     <h1><i class="bi bi-newspaper"></i> {{ 'navbar.blog'|trans }}</h1>
     <hr />
     {% for post in posts %}
-        <div class="card mb-3">
+        <div class="card mb-3 shadow-sm">
             <div class="card-body">
                 <h2 class="fs-3">{{ post.title }}</h2>
                 <p>{{ post.content|striptags|slice(0, 300)  }}...</p>
