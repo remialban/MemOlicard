@@ -2,58 +2,56 @@
 
 {% block title %}{{ cardsList.name }}{% endblock %}
 
-{% block body %}
+{% block container %}
 
-<div class="container">
-    <h1>{{ cardsList.name }}</h1>
-    <hr/>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card mb-3 text-center">
-                <div class="card-body">
-                    <p class="card-text">
-                        <a href="{{ path('list_learn', {id: cardsList.id}) }}" class="btn btn-primary stretched-link"><i class="bi bi-book"></i> {{ 'dashboard.list.learn'|trans }}</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-3 text-center">
-                <div class="card-body">
-                    <p class="card-text">
-                        <a href="{{ path('list_edit', {id: cardsList.id}) }}" class="btn btn-primary stretched-link"><i class="bi bi-pencil-square"></i> {{ 'dashboard.list.edit'|trans }}</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="card mb-3 text-center">
-                <div class="card-body">
-                    <p class="card-text">
-                        <a type="button" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i> {{ 'dashboard.list.delete.title'|trans }}</a>
-                    </p>
-                </div>
+<h1>{{ cardsList.name }}</h1>
+<hr/>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3 text-center">
+            <div class="card-body">
+                <p class="card-text">
+                    <a href="{{ path('list_learn', {id: cardsList.id}) }}" class="btn btn-primary stretched-link"><i class="bi bi-book"></i> {{ 'dashboard.list.learn'|trans }}</a>
+                </p>
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead class="table-primary">
-            <tr>
-                <th scope="col">Front</th>
-                <th scope="col">Back</th>
-            </tr>
-        </thead>
-        <h2>Cards:</h2>
-        <tbody>
-            {% for card in cardsList.cards %}
-                <tr>
-                    <td>{{ card.frontValue }}</td>
-                    <td>{{ card.backValue }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="col-md-6">
+        <div class="card mb-3 text-center">
+            <div class="card-body">
+                <p class="card-text">
+                    <a href="{{ path('list_edit', {id: cardsList.id}) }}" class="btn btn-primary stretched-link"><i class="bi bi-pencil-square"></i> {{ 'dashboard.list.edit'|trans }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-3 text-center">
+            <div class="card-body">
+                <p class="card-text">
+                    <a type="button" class="link-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash"></i> {{ 'dashboard.list.delete.title'|trans }}</a>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
+<table class="table">
+    <thead class="table-primary">
+        <tr>
+            <th scope="col">Front</th>
+            <th scope="col">Back</th>
+        </tr>
+    </thead>
+    <h2>Cards:</h2>
+    <tbody>
+        {% for card in cardsList.cards %}
+            <tr>
+                <td>{{ card.frontValue }}</td>
+                <td>{{ card.backValue }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

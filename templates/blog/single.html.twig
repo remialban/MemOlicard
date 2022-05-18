@@ -2,10 +2,8 @@
 
 {% block title %}{{ post.title }} | MemOliBlog{% endblock %}
 
-{% block body %}
-<div class="container">
-    <h1>{{ post.title }}</h1>
-    <hr/>
-    {{ post.content|raw }}
-</div>
+{% block container %}
+<h1>{{ post.title }}</h1>
+<hr/>
+{{ post.content|raw }}
 {% endblock %}

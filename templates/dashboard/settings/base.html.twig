@@ -1,17 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-<div class="container mt-3">
-    <div class="row">
-        <div class="col-lg-2">
-            <div class="list-group">
-                {{ ("dashboard.settings.profile"|trans)|navItemUser(path('settings_profile'), 'bi-person-circle') }}
-                {{ ("dashboard.settings.security"|trans)|navItemUser(path('settings_security'), 'bi-lock-fill') }}
-            </div>
+{% block container %}
+<div class="row">
+    <div class="col-lg-2">
+        <div class="list-group">
+            {{ ("dashboard.settings.profile"|trans)|navItemUser(path('settings_profile'), 'bi-person-circle') }}
+            {{ ("dashboard.settings.security"|trans)|navItemUser(path('settings_security'), 'bi-lock-fill') }}
         </div>
-        <div class="col-md">
-            {% block settings_content %}{% endblock %}
-        </div>
+    </div>
+    <div class="col-md">
+        {% block settings_content %}{% endblock %}
     </div>
 </div>
 {% endblock %}

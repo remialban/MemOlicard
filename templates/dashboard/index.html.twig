@@ -2,30 +2,28 @@
 
 {% block title %}{{ 'dashboard.title'|trans }}{% endblock %}
 
-{% block body %}
-<div class="container">
-    <h1>{{ 'dashboard.title'|trans }}</h1>
-    <hr/>
-    <h2>{{ 'dashboard.current_lists'|trans }}</h2>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        <i class="bi bi-plus-square"></i> {{ 'dashboard.create_list'|trans }}
-    </button>
-    <hr />
-    <div class="row">
-        {% for cardsList in cardsLists %}
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="card mb-3 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ cardsList.name }}</h5>
-                        <p class="card-text">
-                            <span class="text-black-50 text-muted">{{ 'dashboard.last_update'|trans({'%date%': cardsList.updatedAt|date('Y/m/d H:i')}) }}</span>
-                        </p>
-                        <a href="{{ path('list_view', {id: cardsList.id}) }}" class="stretched-link">{{ 'actions.show'|trans }}</a>
-                    </div>
+{% block container %}
+<h1>{{ 'dashboard.title'|trans }}</h1>
+<hr/>
+<h2>{{ 'dashboard.current_lists'|trans }}</h2>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <i class="bi bi-plus-square"></i> {{ 'dashboard.create_list'|trans }}
+</button>
+<hr />
+<div class="row">
+    {% for cardsList in cardsLists %}
+        <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="card mb-3 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ cardsList.name }}</h5>
+                    <p class="card-text">
+                        <span class="text-black-50 text-muted">{{ 'dashboard.last_update'|trans({'%date%': cardsList.updatedAt|date('Y/m/d H:i')}) }}</span>
+                    </p>
+                    <a href="{{ path('list_view', {id: cardsList.id}) }}" class="stretched-link">{{ 'actions.show'|trans }}</a>
                 </div>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
