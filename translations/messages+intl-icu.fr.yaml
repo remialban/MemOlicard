@@ -94,3 +94,7 @@ flash:
 
 blog:
   read_more: Lire la suite
+
+footer:
+  title: Site internet fait par <a href="https://github.com/remialban">Rémi ALBAN</a> avec amour !
+  social_network: Réseaux sociaux

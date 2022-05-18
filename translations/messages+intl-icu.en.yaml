@@ -94,3 +94,7 @@ flash:
 
 blog:
   read_more: Read more
+
+footer:
+  title: Website made by <a href="https://github.com/remialban">Rémi ALBAN</a> with love!
+  social_network: Social networks

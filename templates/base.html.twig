@@ -33,6 +33,7 @@
             <div class="container">
                 {% block container %}{% endblock %}
             </div>
+            {% include 'modules/footer.html.twig' %}
             <div class="toast-container position-absolute top-0 end-0 me-5 mt-5 pt-5">
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
