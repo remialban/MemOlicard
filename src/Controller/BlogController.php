@@ -3,18 +3,28 @@
 namespace App\Controller;
 
 use App\Repository\PostRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BlogController extends AbstractController
 {
     /**
      * @Route("/blog", name="blog")
      */
-    public function blog(PostRepository $postRepository)
+    public function blog(
+        PostRepository $postRepository,
+        PaginatorInterface $paginator,
+        Request $request)
     {
-        $posts = $postRepository->findAll();
+        $posts = $paginator->paginate(
+            $postRepository->findAll(),
+            $request->query->get('page', 1),
+            5
+        );
+
         return $this->render('blog/list.html.twig', [
             'posts' => $posts,
         ]);

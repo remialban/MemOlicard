@@ -13,5 +13,7 @@
             <a href="{{ path('blog_view', {'slug': post.slug}) }}" class="btn btn-primary btn-sm stretched-link">{{ 'blog.read_more'|trans }}</a>
         </div>
     </div>
+    <br>
 {% endfor %}
+{{ knp_pagination_render(posts) }}
 {% endblock %}
