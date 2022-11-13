@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\CardRepository;
 use ApiPlatform\Core\Annotation\ApiFilter;
@@ -172,42 +173,42 @@ class Card
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function getMovedAt(): ?\DateTimeImmutable
+    public function getMovedAt(): ?DateTimeImmutable
     {
         return $this->movedAt;
     }
 
-    public function setMovedAt(\DateTimeImmutable $movedAt): self
+    public function setMovedAt(DateTimeImmutable $movedAt): self
     {
         $this->movedAt = $movedAt;
 
         return $this;
     }
-    
+
     /**
      * Gets triggered only on insert
 
@@ -215,7 +216,7 @@ class Card
      */
     public function onPrePersist(): void
     {
-        $dateTimeImmutable = new \DateTimeImmutable();
+        $dateTimeImmutable = new DateTimeImmutable();
         $this->createdAt = $dateTimeImmutable;
         $this->updatedAt = $dateTimeImmutable;
         $this->movedAt = $dateTimeImmutable;
@@ -228,7 +229,7 @@ class Card
      */
     public function onPreUpdate(): void
     {
-        $this->updatedAt = new \DateTimeImmutable("now");
+        $this->updatedAt = new DateTimeImmutable("now");
     }
 
     public function getIsStudiedInCurrentCycle(): ?bool

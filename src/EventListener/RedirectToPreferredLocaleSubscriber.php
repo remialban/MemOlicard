@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use UnexpectedValueException;
+use function in_array;
 use function Symfony\Component\String\u;
 
 /**
@@ -41,13 +43,13 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
         $this->urlGenerator = $urlGenerator;
         $this->locales = explode('|', trim($locales));
         if (empty($this->locales)) {
-            throw new \UnexpectedValueException('The list of supported locales must not be empty.');
+            throw new UnexpectedValueException('The list of supported locales must not be empty.');
         }
 
         $this->defaultLocale = $defaultLocale ?: $this->locales[0];
 
-        if (!\in_array($this->defaultLocale, $this->locales, true)) {
-            throw new \UnexpectedValueException(sprintf('The default locale ("%s") must be one of "%s".', $this->defaultLocale, $locales));
+        if (!in_array($this->defaultLocale, $this->locales, true)) {
+            throw new UnexpectedValueException(sprintf('The default locale ("%s") must be one of "%s".', $this->defaultLocale, $locales));
         }
 
         // Add the default locale at the first position of the array,

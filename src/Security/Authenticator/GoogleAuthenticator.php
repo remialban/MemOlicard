@@ -17,7 +17,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -91,15 +90,14 @@ class GoogleAuthenticator extends AbstractAuthenticator
         }
 
         return new SelfValidatingPassport(new UserBadge($response->getId(), function($userIdentifier) {
-            $user = $this->userRepository->findOneBy([
+            return $this->userRepository->findOneBy([
                 'googleId' => $userIdentifier,
             ]);
-            return $user;
         }), [
             // new RememberMeBadge(),
         ]);
     }
-    
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;

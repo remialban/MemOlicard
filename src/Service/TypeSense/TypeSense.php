@@ -3,8 +3,12 @@
 namespace App\Service\TypeSense;
 
 use App\Entity\User;
+use Http\Client\Exception;
+use JsonException;
 use Typesense\Client;
 use App\Repository\UserRepository;
+use Typesense\Exceptions\ConfigError;
+use Typesense\Exceptions\TypesenseClientError;
 
 class TypeSense {
     private string $apiKey;
@@ -27,7 +31,7 @@ class TypeSense {
         $this->userRepository = $userRepository;
     }
 
-    public function getClient()
+    public function getClient(): Client
     {
         return new Client([
             'api_key'         => $this->apiKey,
@@ -42,7 +46,7 @@ class TypeSense {
         ]);
     }
 
-    public function getSchema()
+    public function getSchema(): array
     {
         $schema = [];
         $schema[User::class] = [
@@ -58,6 +62,11 @@ class TypeSense {
         return $schema;
     }
 
+    /**
+     * @throws Exception
+     * @throws ConfigError
+     * @throws TypesenseClientError
+     */
     public function updateSchema()
     {
         $collections = $this->getClient()->collections;
@@ -69,6 +78,12 @@ class TypeSense {
         }
     }
 
+    /**
+     * @throws Exception
+     * @throws TypesenseClientError
+     * @throws ConfigError
+     * @throws JsonException
+     */
     public function populate()
     {
         $this->updateSchema();
@@ -81,7 +96,7 @@ class TypeSense {
         $response = $collection->documents->import($users, ['action' => 'create']);
     }
 
-    public function objectToArray($object)
+    public function objectToArray($object): array
     {
         $fields = $this->getSchema()[get_class($object)]['fields'];
         $array = [];
@@ -97,14 +112,14 @@ class TypeSense {
         return $array;
     }
 
-    public function update($object)
+    public function update($object): array
     {
         $document = $this->objectToArray($object);
         $collectionName = $this->getSchema()[get_class($object)]["name"];
-        return $this->getClient()->collections[$collectionName]->documents->upsert($document);          
+        return $this->getClient()->collections[$collectionName]->documents->upsert($document);
     }
 
-    public function delete($object)
+    public function delete($object): array
     {
         $collectionName = $this->getSchema()[get_class($object)]["name"];
         return $this->getClient()->collections[$collectionName]->documents[$object->getId()]->delete();

@@ -2,14 +2,9 @@
 
 namespace App\Security\Authenticator;
 
-use App\Entity\User;
 use App\Form\LoginType;
 use App\Tool\CustomJWT;
-use VRia\Utils\NoDiacritic;
-use App\Security\OAuth\Google;
 use App\Repository\UserRepository;
-use Psr\Container\ContainerInterface;
-use Symfony\Component\Form\FormFactory;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +18,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\Badge\RememberMeBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -92,11 +86,11 @@ class FormAuthenticator extends AbstractAuthenticator
                             return $this->userRepository->findOneBy([
                                 'email' => $userIdentifier,
                             ]);
-                        }                    
+                        }
                     ), [
                         // new RememberMeBadge(),
                     ]);
-                } else 
+                } else
                 {
                     $email = (new TemplatedEmail())
                         ->from("remi.alban@hotmail.com")
@@ -127,7 +121,7 @@ class FormAuthenticator extends AbstractAuthenticator
             throw new AuthenticationException($this->translator->trans('flash.auth.invalid_username'));
         }
     }
-    
+
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         return null;

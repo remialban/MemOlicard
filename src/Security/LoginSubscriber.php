@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\Event\LoginSuccessEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginSubscriber implements EventSubscriberInterface

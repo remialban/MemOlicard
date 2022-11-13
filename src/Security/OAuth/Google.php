@@ -4,6 +4,10 @@ namespace App\Security\OAuth;
 
 use App\Security\OAuthResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,7 +24,7 @@ class Google
         $this->router = $router;
     }
 
-    public static function getLoginPageUrl(UrlGeneratorInterface $router)
+    public static function getLoginPageUrl(UrlGeneratorInterface $router): string
     {
         $redirectUri = $router->generate("login", [
             "service" => "google"
@@ -62,9 +66,9 @@ class Google
                 $responseValidateTokenArray['email'],
                 $responseValidateTokenArray['sub']
             );
-        } catch (ClientException $clientException) {
+        } catch (ClientException|TransportExceptionInterface|RedirectionExceptionInterface|ServerExceptionInterface|ClientExceptionInterface $clientException) {
         }
-        
+
         return null;
     }
 }

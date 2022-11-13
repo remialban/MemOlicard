@@ -5,8 +5,10 @@ namespace App\DataFixtures;
 use App\Entity\Card;
 use App\Entity\CardsList;
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Faker\Factory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
@@ -20,7 +22,7 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $faker = \Faker\Factory::create();
+        $faker = Factory::create();
 
         $user = (new User())
             ->setFirstName("John")
@@ -28,7 +30,7 @@ class AppFixtures extends Fixture
             ->setBiography("Students")
             ->setEmail("johndoe@johndoe.com")
             ->setUsername("johndoe")
-            ->setEmailIsChecked(true);
+            ->setEmailIsChecked(true)
         ;
         $user->setPassword($this->hasher->hashPassword($user, "John-Doe12"));
 
@@ -37,14 +39,14 @@ class AppFixtures extends Fixture
         $users = [];
         $users[] = $user;
 
-        for ($i=0; $i < 20; $i++) { 
+        for ($i=0; $i < 20; $i++) {
             $user = (new User())
                 ->setFirstName($faker->firstName())
                 ->setLastName($faker->lastName())
                 ->setBiography($faker->realText())
                 ->setEmail($faker->email())
                 ->setUsername($faker->userName())
-                ->setEmailIsChecked($faker->boolean());
+                ->setEmailIsChecked($faker->boolean())
             ;
             $user->setPassword($this->hasher->hashPassword($user, "password123"));
 
@@ -60,8 +62,8 @@ class AppFixtures extends Fixture
                 ->setUser($faker->randomElement($users))
                 ->setBoxesNumber($faker->numberBetween(2,10))
                 ->setCurrentCycle($faker->numberBetween(1, 1000))
-                ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))
-                ->setUpdatedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))
+                ->setCreatedAt(DateTimeImmutable::createFromMutable($faker->dateTime()))
+                ->setUpdatedAt(DateTimeImmutable::createFromMutable($faker->dateTime()))
             ;
 
             $lists[] = $list;
@@ -69,12 +71,12 @@ class AppFixtures extends Fixture
             $manager->persist($list);
         }
 
-        for ($i=0; $i < 1000; $i++) { 
+        for ($i=0; $i < 1000; $i++) {
             $card = (new Card())
                 ->setCardsList($faker->randomElement($lists))
                 ->setFrontValue($faker->word())
                 ->setBackValue($faker->word())
-                ->setMovedAt(\DateTimeImmutable::createFromMutable($faker->dateTime()))
+                ->setMovedAt(DateTimeImmutable::createFromMutable($faker->dateTime()))
                 ->setSide($faker->randomElement(["front", "back"]))
                 ->setIsStudiedInCurrentCycle($faker->boolean())
             ;

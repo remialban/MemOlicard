@@ -2,9 +2,7 @@
 
 namespace App\EventListener;
 
-use App\Entity\User;
 use Doctrine\ORM\Events;
-use App\Entity\CardsList;
 use App\Service\TypeSense\TypeSense;
 use Psr\Log\LoggerInterface;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -22,7 +20,7 @@ class TypeSenseEventListener implements EventSubscriberInterface
         $this->typesense = $typesense;
     }
 
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return [
             Events::postPersist,

@@ -5,6 +5,7 @@ namespace App\Controller\Dashboard;
 use App\Entity\CardsList;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -29,7 +30,7 @@ class ListController extends AbstractController
         Request $request,
         ManagerRegistry $managerRegistry)
     {
-        if ($cardsList->getUser() != $this->getUser())
+        if ($cardsList->getUser() !== $this->getUser())
         {
             throw new NotFoundHttpException();
         }
@@ -61,9 +62,9 @@ class ListController extends AbstractController
      *     "fr": "/{id}/modifier"
      * }, name="edit")
      */
-    public function edit(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
+    public function edit(CardsList $cardsList, JWTTokenManagerInterface $JWTManager): Response
     {
-        if ($cardsList->getUser() != $this->getUser())
+        if ($cardsList->getUser() !== $this->getUser())
         {
             throw new NotFoundHttpException();
         }
@@ -80,9 +81,9 @@ class ListController extends AbstractController
      *     "fr": "/{id}/apprendre"
      * }, name="learn")
      */
-    public function learn(CardsList $cardsList, JWTTokenManagerInterface $JWTManager)
+    public function learn(CardsList $cardsList, JWTTokenManagerInterface $JWTManager): Response
     {
-        if ($cardsList->getUser() != $this->getUser())
+        if ($cardsList->getUser() !== $this->getUser())
         {
             throw new NotFoundHttpException();
         }

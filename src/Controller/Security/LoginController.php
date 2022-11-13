@@ -2,13 +2,13 @@
 
 namespace App\Controller\Security;
 
-use App\Entity\User;
 use App\Tool\CustomJWT;
 use App\Security\OAuth\Google;
 use App\Form\ForgotPasswordType;
 use App\Form\LoginType;
 use App\Repository\UserRepository;
-use Firebase\JWT\SignatureInvalidException;
+use DateTimeImmutable;
+use DateTimeInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -20,7 +20,6 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class LoginController extends AbstractController
@@ -28,13 +27,10 @@ class LoginController extends AbstractController
     /**
      * @Route(path={
      *     "en": "/login",
-     *     "fr": "/se-connecter" 
+     *     "fr": "/se-connecter"
      * }, name="login")
      */
-    public function index(
-        AuthenticationUtils $authenticationUtils,
-        Request $request,
-        UrlGeneratorInterface $router): Response
+    public function index(UrlGeneratorInterface $router): Response
     {
         $this->denyAccessUnlessGranted('anonymous');
 
@@ -71,8 +67,8 @@ class LoginController extends AbstractController
                 $payload = $customJWT->getData($token);
                 if ($payload['type'] == "forgotPassword")
                 {
-                    $currentDate = new \DateTimeImmutable();
-                    $tokenDate = \DateTimeImmutable::createFromFormat(\DateTimeImmutable::ATOM, $payload['expireAt']);
+                    $currentDate = new DateTimeImmutable();
+                    $tokenDate = DateTimeImmutable::createFromFormat(DateTimeInterface::ATOM, $payload['expireAt']);
                     if ($tokenDate > $currentDate)
                     {
                         $user = $userRepository->findOneBy([
@@ -80,14 +76,14 @@ class LoginController extends AbstractController
                         ]);
                         $form = $this->createForm(CreatePasswordType::class, $user);
                         $form->handleRequest($request);
-                        
+
                         if ($form->isSubmitted() && $form->isValid())
                         {
                             $user = $form->getData();
 
                             $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getModifiedPassword());
                             $user->setPassword($hashedPassword);
-            
+
                             $managerRegistry->getManager()->persist($user);
                             $managerRegistry->getManager()->flush();
 
@@ -115,29 +111,29 @@ class LoginController extends AbstractController
             {
                 $contentForm = $form->getData();
                 $username = $contentForm['username'];
-    
+
                 $criteria = [];
-    
+
                 if (filter_var($username, FILTER_VALIDATE_EMAIL))
                 {
                     $criteria['email'] = $username;
                 } else {
                     $criteria['username'] = $username;
                 }
-    
+
                 $user = $userRepository->findOneBy($criteria);
-    
+
                 if ($user)
                 {
-                    $currentDate = new \DateTimeImmutable();
+                    $currentDate = new DateTimeImmutable();
                     $newDate = $currentDate->modify("+15 minute");
-    
+
                     $payload = [
                         "type" => "forgotPassword",
                         "email" => $user->getEmail(),
-                        "expireAt" => $newDate->format(\DateTimeImmutable::ATOM),
+                        "expireAt" => $newDate->format(DateTimeInterface::ATOM),
                     ];
-    
+
                     $email = (new TemplatedEmail())
                         ->from("remi.alban@hotmail.com")
                         ->to($user->getEmail())

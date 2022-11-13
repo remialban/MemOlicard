@@ -3,13 +3,9 @@
 namespace App\Controller\Dashboard;
 
 use App\Entity\User;
-use App\Tool\CustomJWT;
 use App\Form\Settings\ProfileType;
-use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\Settings\Security\ChangePasswordType;
@@ -115,24 +111,24 @@ class SettingsController extends AbstractController
                 $form = $this->createForm(CreatePasswordType::class, $user);
             }
             $form->handleRequest($request);
-            
+
             if ($form->isSubmitted() && $form->isValid())
             {
                 $user = $form->getData();
-    
+
                 $hashedPassword = $userPasswordHasherInterface->hashPassword($user, $user->getModifiedPassword());
                 $user->setPassword($hashedPassword);
-    
+
                 $em = $managerRegistry->getManager();
                 $em->persist($user);
                 $em->flush();
-    
+
                 $this->addFlash('success', $translator->trans('flash.profile.password_update_successful'));
             }
 
             return $this->render('dashboard/settings/security.html.twig', [
                 'form' => $form->createView(),
-            ]);   
+            ]);
         }
     }
 }

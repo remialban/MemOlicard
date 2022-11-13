@@ -116,6 +116,6 @@ class RegistrationController extends AbstractController
                 }
             } catch (SignatureInvalidException $exception) {}
         }
-        $this->createNotFoundException();
+        throw $this->createNotFoundException();
     }
 }

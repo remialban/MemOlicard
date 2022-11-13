@@ -6,14 +6,13 @@ use App\Entity\Card;
 use App\Entity\User;
 use App\Entity\CardsList;
 use Doctrine\ORM\QueryBuilder;
-use App\Repository\CardsListRepository;
 use Symfony\Component\Security\Core\Security;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Util\QueryNameGeneratorInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryItemExtensionInterface;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Extension\QueryCollectionExtensionInterface;
 
 class CurrentUserExtension implements QueryCollectionExtensionInterface, QueryItemExtensionInterface
-{ 
+{
     private Security $security;
     private User $user;
 

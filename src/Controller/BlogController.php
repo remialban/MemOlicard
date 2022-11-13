@@ -17,7 +17,7 @@ class BlogController extends AbstractController
     public function blog(
         PostRepository $postRepository,
         PaginatorInterface $paginator,
-        Request $request)
+        Request $request): Response
     {
         $posts = $paginator->paginate(
             $postRepository->findAll(),
