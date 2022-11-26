@@ -61,6 +61,7 @@ class RedirectToPreferredLocaleSubscriber implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
+        return [];
         return [
             KernelEvents::REQUEST => 'onKernelRequest',
         ];
