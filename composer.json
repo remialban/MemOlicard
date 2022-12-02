@@ -17,7 +17,7 @@
         "fakerphp/faker": "^1.19",
         "firebase/php-jwt": "^6.0",
         "knplabs/knp-paginator-bundle": "^5.8",
-        "lexik/jwt-authentication-bundle": "^2.14",
+        "lexik/jwt-authentication-bundle": "^2.16",
         "nelmio/cors-bundle": "^2.2",
         "php-http/curl-client": "^2.2",
         "phpdocumentor/reflection-docblock": "^5.3",

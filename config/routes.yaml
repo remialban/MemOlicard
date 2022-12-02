@@ -1,6 +1,10 @@
 #index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\DefaultController::
+
+api_login_check:
+    path: /api/login_check
+
 homepage:
 #    path: /{_locale}
     path: /
